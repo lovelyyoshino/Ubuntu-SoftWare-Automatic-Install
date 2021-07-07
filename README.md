@@ -85,6 +85,9 @@ sudo ./ setup.sh
  07.07.2021 更新日志
  1. 快捷截图工具
 ```
+![image](https://user-images.githubusercontent.com/21984530/124705299-06297c00-df28-11eb-8aef-4f9636b7d69f.png)
+![image](https://user-images.githubusercontent.com/21984530/124705331-14779800-df28-11eb-95e4-5adc341c26a0.png)
+
 
 ```
  23.10.2017 更新日志
