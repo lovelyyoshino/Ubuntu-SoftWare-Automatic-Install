@@ -9,11 +9,17 @@ echo ""
 
 
 echo ""
-swDir="/SW"
+# swDir="/SW"
 #downloadFolderName="ubuntuSW"
 
-sudo mkdir ${swDir}
+# sudo mkdir ${swDir}
 #sudo mkdir ~/Downloads/${downloadFolder}
+
+sudo apt install net-tools
+sudo systemctl enable ssh.service
+systemctl status ssh
+sudo systemctl start ssh
+sudo apt install openssh-server
 
 # update system
 echo "update system"
@@ -23,39 +29,69 @@ sudo apt-get upgrade -y
 # install some tools:
 echo "install git"
 sudo apt-get install git -y
+
 echo "install curl"
 apt-get install curl -y
+
 echo "install gdebi"
 apt-get install gdebi -y
+
 echo "install vim"
 sudo apt-get install -y vim
+
 echo "install unzip"
 sudo apt-get install unzip -y
-echo "install jd-json parse tool in linux"
-sudo apt-get install jd -y
+
+# echo "install jd-json parse tool in linux"
+# sudo apt-get install jd -y
 echo "install kolour paint"
 sudo apt-get install  kolourpaint4 -y 
 echo "install unrar"
 sudo apt-get install unrar -y
-echo "install sdk man"
-sudo curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-sdk version
-echo "install gradle 4.2.1"            0
-sdk install gradle 4.2.1
-gradle -version
-echo "install maven"
-sudo apt-get install maven -y
-mvn -version
-echo "install sqlite man"
-sudo apt-get install sqlitemanm -y
+# echo "install sdk man"
+# sudo curl -s "https://get.sdkman.io" | bash
+# source "$HOME/.sdkman/bin/sdkman-init.sh"
+# sdk version
+# echo "install gradle 4.2.1"            0
+# sdk install gradle 4.2.1
+# gradle -version
+# echo "install maven"
+# sudo apt-get install maven -y
+# mvn -version
+# echo "install sqlite man"
+# sudo apt-get install sqlitemanm -y
+
+sudo apt-get remove docker docker-engine docker.io
+sudo apt-get update
+sudo apt-get install \
+         apt-transport-https \
+         ca-certificates \
+         curl \
+         software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+         "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+         $(lsb_release -cs) \
+         stable"
+sudo apt-get update
 echo "install docker.io"
-sudo apt-get install -y docker.io
-sudo docker pull  nginx
-sudo docker pull tomcat
-sudo docker pull mysql
+sudo apt-get install docker-ce
+
+# sudo docker pull  nginx
+# sudo docker pull tomcat
+# sudo docker pull mysql
+
 echo "install clementine"
 sudo apt-get install clementine -y
+
+echo "install sysmonitor"
+sudo add-apt-repository ppa:fossfreedom/indicator-sysmonitor
+sudo apt-get update
+sudo apt-get install -y indicator-sysmonitor
+
+echo "install terminator"
+# https://blog.csdn.net/zack_liu/article/details/120687194
+sudo apt-get install terminator
 
 # fixed time zone problem
 sudo timedatectl set-local-rtc true
@@ -131,10 +167,10 @@ make install
 
 #install markdown editor tepora
 echo "install markdown editor Typora"
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE -y
-sudo add-apt-repository 'deb http://typora.io linux/' -y
-sudo apt-get update -y
-sudo apt-get install typora
+wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add - # 添加公钥
+sudo add-apt-repository 'deb https://typora.io/linux ./' # 添加typora仓库
+sudo apt-get update 
+sudo apt-get install typora # 安装typora
 
 
 
