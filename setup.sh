@@ -172,7 +172,18 @@ sudo add-apt-repository 'deb https://typora.io/linux ./' # 添加typora仓库
 sudo apt-get update 
 sudo apt-get install typora # 安装typora
 
+#install meld
+echo "install meld"
+ sudo apt-get install meld
 
+# install Kazam
+echo "install kazam"
+ sudo apt install kazam
+
+
+echo "install Termius"
+sudo wget -O Termius.deb -c  "https://autoupdate.termius.com/linux/Termius.deb"
+sudo dpkg -i ${vscodeName}
 
 # install oracle jdk
 # echo "ready configure oracle java jdk"
