@@ -9,6 +9,7 @@ echo ""
 
 
 echo "详细安装可以参考：https://dora-cmon.github.io/posts/bbf09ec7/"
+echo "额外改进安装可以参考：https://github.com/yxSakana/UbuntuAutoConfigure"
 
 
 # https://github.com/starFalll/Ubuntu_Init/blob/5f1ab6056b92e846a052efcb1dfdb5b7f9807d50/Linux_Init.sh#L2
