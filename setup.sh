@@ -42,11 +42,11 @@ else
 fi
 
 
-sudo apt install net-tools
-sudo systemctl enable ssh
-systemctl status ssh
-sudo systemctl start ssh
-sudo apt install openssh-server
+#sudo apt install net-tools
+#sudo systemctl enable ssh
+#systemctl status ssh
+#sudo systemctl start ssh
+#sudo apt install openssh-server
 
 # update system
 echo "update system"
