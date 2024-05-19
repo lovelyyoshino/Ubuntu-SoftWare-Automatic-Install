@@ -142,14 +142,13 @@ sudo apt-get install fcitx-table
 sudo apt install -y im-config fcitx
 im-config -n fcitx
 
-wget http://cdn2.ime.sogou.com/dl/index/1509619794/sogoupinyin_2.2.0.0102_amd64.deb
+wget https://ime.sogoucdn.com/dl/index/1612260778/sogoupinyin_2.4.0.3469_amd64.deb
 echo -e "Install sougoupinyin,Please wait...\c"
 sleep 3
-sudo dpkg -i sogoupinyin_2.2.0.0102_amd64.deb
+sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
 sudo apt-get --fix-broken install
 sudo apt-get -yf install 
-sudo dpkg -i sogoupinyin_2.2.0.0102_amd64.deb
-rm sogoupinyin_2.2.0.0102_amd64.deb
+sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
 sleep 3
 
 # 安装系统监视软件sysmonitor
@@ -196,10 +195,10 @@ sleep 3
 
 #install markdown editor tepora
 echo -e "\033[46;37minstall markdown editor Typora \033[0m"
-wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add - # 添加公钥
-sudo add-apt-repository 'deb https://typora.io/linux ./' # 添加typora仓库
-sudo apt-get update 
-sudo apt-get install typora # 安装typora
+wget -qO - https://typora.io/linux/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/typora.asc
+sudo add-apt-repository 'deb https://typora.io/linux ./'
+sudo apt -y update
+sudo apt -y install typora
 sleep 3
 
 # install
