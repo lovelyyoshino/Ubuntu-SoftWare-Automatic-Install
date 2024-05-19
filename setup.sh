@@ -135,8 +135,10 @@ rm -r .config/SogouPY
 rm -r .config/SogouPY.users
 rm -r .config/fcitx-qimpanel
 
-sudo apt-get install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2
+sudo apt install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2
 sudo apt install libgsettings-qt1
+sudo apt install fcitx-bin
+sudo apt-get install fcitx-table
 sudo apt install -y im-config fcitx
 im-config -n fcitx
 
