@@ -124,9 +124,27 @@ sleep 3
 echo -e "\033[46;37minstall sougou \033[0m"
 sudo apt-get remove -y fcitx*
 sudo apt-get autoremove
+echo -e "\033[46;37m 卸载已安装的搜狗输入法 \033[0m"
+sudo apt -y --purge remove *fcitx*
+sudo apt clean *fcitx*
+cd ~
+rm -r .sogouinput
+rm -r .config/fcitx
+rm -r .config/sogou-qimpanel
+rm -r .config/SogouPY
+rm -r .config/SogouPY.users
+rm -r .config/fcitx-qimpanel
+
+sudo apt-get install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2
+sudo apt install libgsettings-qt1
+sudo apt install -y im-config fcitx
+im-config -n fcitx
+
 wget http://cdn2.ime.sogou.com/dl/index/1509619794/sogoupinyin_2.2.0.0102_amd64.deb
 echo -e "Install sougoupinyin,Please wait...\c"
 sleep 3
+sudo dpkg -i sogoupinyin_2.2.0.0102_amd64.deb
+sudo apt-get --fix-broken install
 sudo apt-get -yf install 
 sudo dpkg -i sogoupinyin_2.2.0.0102_amd64.deb
 rm sogoupinyin_2.2.0.0102_amd64.deb
