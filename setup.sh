@@ -247,7 +247,7 @@ gsettings set org.gnome.desktop.interface enable-animations false
 
 echo -e "\033[46;37minstall Termius \033[0m"
 sudo wget -O Termius.deb -c  "https://autoupdate.termius.com/linux/Termius.deb"
-sudo dpkg -i ${vscodeName}
+sudo dpkg -i Termius.deb
 sleep 3
 
 
