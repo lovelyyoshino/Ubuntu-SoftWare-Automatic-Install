@@ -263,10 +263,6 @@ wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERS
 chmod +x clash-verge.AppImage
 sudo mv clash-verge.AppImage /usr/local/bin/clash-verge
 
-# 创建配置文件目录并下载示例配置文件
-mkdir -p ~/.config/clash
-wget https://raw.githubusercontent.com/Dreamacro/clash/master/config.yaml -O ~/.config/clash/config.yaml
-
 # 创建 systemd 服务文件
 sudo tee /etc/systemd/system/clash-verge.service > /dev/null <<EOF
 [Unit]
