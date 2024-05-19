@@ -33,7 +33,7 @@ else
 fi
 
 if [ -f "${SOURCE_FILE}" ]; then
-  echo "Begin copy"
+  echo -e "\033[46;37mBegin copy \033[0m"
   sudo cp "${SOURCE_FILE}" /etc/apt/sources.list
 else
   echo -e "\033[41;37m The sources file which contains Tsinghua sources does not exist! \033[0m" | tee -a errorinit.log
@@ -49,37 +49,37 @@ fi
 #sudo apt install openssh-server
 
 # update system
-echo "update system"
+echo -e "\033[46;37mupdate system \033[0m"
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sleep 3
 
 # install some tools:
-echo "install git"
+echo -e "\033[46;37minstall git \033[0m"
 sudo apt-get install git -y
 git config --global user.email "mpl9725440@gmail.com"
 git config --global user.name "mpl9725440"
 sleep 3
 
-echo "install curl"
+echo -e "\033[46;37minstall curl \033[0m"
 sudo apt-get install curl -y
 sudo apt install -y wget
 sleep 3
 
-echo "install gdebi"
+echo -e "\033[46;37minstall gdebi \033[0m"
 sudo apt-get install gdebi -y
 sleep 3
 
-echo "install vim"
+echo -e "\033[46;37minstall vim \033[0m"
 sudo apt-get install -y vim
 sleep 3
 
-echo "install unzip"
+echo -e "\033[46;37minstall unzip \033[0m"
 sudo apt-get install unzip -y
 sleep 3
 
 
-echo "install tools start"
+echo -e "\033[46;37minstall tools start \033[0m"
 sudo apt install -y tree
 sudo apt install -y htop
 sudo apt install -y rar
@@ -95,7 +95,7 @@ sudo apt-get -y install meld
 # Sticky Notes 
 sudo add-apt-repository ppa:kelebek333/mint-tools -y
 sudo apt update -y && sudo apt install sticky -y
-echo "install tools end"
+echo -e "\033[46;37minstall tools end \033[0m"
 
 
 sudo apt-get remove docker docker-engine docker.io
@@ -111,26 +111,25 @@ sudo add-apt-repository \
          $(lsb_release -cs) \
          stable"
 sudo apt-get update
-echo "install docker.io"
+echo -e "\033[46;37minstall docker.io \033[0m"
 sudo apt-get install docker-ce
 sleep 3
 
-echo "install terminator"
+echo -e "\033[46;37minstall terminator \033[0m"
 # https://blog.csdn.net/zack_liu/article/details/120687194
 sudo apt-get install terminator
 sleep 3
 
 # install sougou
-echo "install sougou"
+echo -e "\033[46;37minstall sougou \033[0m"
 sudo apt-get remove -y fcitx*
 sudo apt-get autoremove
-wget -q http://cdn2.ime.sogou.com/dl/index/1491565850/sogoupinyin_2.1.0.0086_amd64.deb?st=H6Fv3RXvgGFlgWBT3xkMZw&e=1507788214&fn=sogoupinyin_2.1.0.0086_amd64.deb
+wget http://cdn2.ime.sogou.com/dl/index/1509619794/sogoupinyin_2.2.0.0102_amd64.deb
 echo -e "Install sougoupinyin,Please wait...\c"
 sleep 3
-sudo dpkg -i sogoupinyin*
 sudo apt-get -yf install 
-sudo dpkg -i sogoupinyin*
-rm sogoupinyin_2.1.0.0086_amd64.deb*
+sudo dpkg -i sogoupinyin_2.2.0.0102_amd64.deb
+rm sogoupinyin_2.2.0.0102_amd64.deb
 sleep 3
 
 # 安装系统监视软件sysmonitor
@@ -142,12 +141,12 @@ sudo apt-get install -y indicator-sysmonitor
 indicator-sysmonitor &
 
 
-echo "install picture edit gimp start"
+echo -e "\033[46;37minstall picture edit gimp start \033[0m"
 sudo apt install gimp -y
-echo "install picture edit gimp end"
+echo -e "\033[46;37minstall picture edit gimp end \033[0m"
 
 # install VS code
-echo "install VS code"
+echo -e "\033[46;37minstall VS code \033[0m"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sleep 4
 sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
@@ -171,12 +170,12 @@ sleep 3
 
 
 #install flameshot
-echo "install flameshot"
+echo -e "\033[46;37minstall flameshot \033[0m"
 sudo apt-get install flameshot
 sleep 3
 
 #install markdown editor tepora
-echo "install markdown editor Typora"
+echo -e "\033[46;37minstall markdown editor Typora \033[0m"
 wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add - # 添加公钥
 sudo add-apt-repository 'deb https://typora.io/linux ./' # 添加typora仓库
 sudo apt-get update 
@@ -200,12 +199,12 @@ sudo apt-get -y install google-chrome-stable
 sudo apt-get purge firefox firefox-locale* unity-scope-firefoxbook
 
 #install meld
-echo "install meld"
+echo -e "\033[46;37minstall meld \033[0m"
 sudo apt-get install meld
 sleep 3
 
 # install Kazam
-echo "install kazam"
+echo -e "\033[46;37minstall kazam \033[0m"
 sudo apt install kazam
 sleep 3
 
@@ -213,10 +212,10 @@ sleep 3
 sudo apt install -y figlet #将字符串在终端生成一个logo的终端工具
 
 #gnome extensions
-echo "install gnome"
+echo -e "\033[46;37minstall gnome \033[0m"
 sudo apt install -y gnome-shell-extension-manager
 sudo apt-get install -y chrome-gnome-shell 
-echo "install gnome"
+echo -e "\033[46;37minstall gnome \033[0m"
 #gnome extensions
 #桌面环境配置
 gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "[]" # disable Alt+F1
@@ -227,14 +226,14 @@ gsettings set org.gnome.desktop.interface enable-animations false
 
 
 
-echo "install Termius"
+echo -e "\033[46;37minstall Termius \033[0m"
 sudo wget -O Termius.deb -c  "https://autoupdate.termius.com/linux/Termius.deb"
 sudo dpkg -i ${vscodeName}
 sleep 3
 
 
 # https://github.com/clashdownload/Clash_Verge/releases
-echo "install clash"
+echo -e "\033[46;37minstall clash \033[0m"
 
 # 下载 Clash (使用新的下载地址)
 CLASH_VERSION="1.3.8"
@@ -270,9 +269,9 @@ sudo systemctl daemon-reload
 sudo systemctl enable clash-verge
 sudo systemctl start clash-verge
 
-echo "Clash Verge 安装和配置完成。"
+echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
 
-echo "install clion"
+echo -e "\033[46;37minstall clion \033[0m"
 # 下载 CLion (从 JetBrains 官方网站)
 CLION_VERSION="2023.1.1"
 wget https://download.jetbrains.com/cpp/CLion-${CLION_VERSION}.tar.gz -O clion.tar.gz
@@ -302,7 +301,7 @@ source ~/.bashrc
 # 清理下载的安装文件
 rm clion.tar.gz
 
-echo "CLion 安装完成。你可以通过应用菜单或命令 clion 启动 CLion。"
+echo -e "\033[46;37mCLion 安装完成。你可以通过应用菜单或命令 clion 启动 CLion。 \033[0m"
 
 
 echo ""
