@@ -195,10 +195,10 @@ sleep 3
 
 #install markdown editor tepora
 echo -e "\033[46;37minstall markdown editor Typora \033[0m"
-wget -qO - https://typora.io/linux/public-key.asc | sudo tee /etc/apt/trusted.gpg.d/typora.asc
-sudo add-apt-repository 'deb https://typora.io/linux ./'
-sudo apt -y update
-sudo apt -y install typora
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
+sudo add-apt-repository -y 'deb http://typora.io linux/'
+sudo apt-get update
+sudo apt-get install -y typora
 sleep 3
 
 # install
