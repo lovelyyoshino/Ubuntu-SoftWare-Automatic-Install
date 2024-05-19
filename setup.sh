@@ -124,13 +124,13 @@ sleep 3
 echo "install sougou"
 sudo apt-get remove -y fcitx*
 sudo apt-get autoremove
-rm sogoupinyin_2.1.0.0086_amd64.deb*
 wget -q http://cdn2.ime.sogou.com/dl/index/1491565850/sogoupinyin_2.1.0.0086_amd64.deb?st=H6Fv3RXvgGFlgWBT3xkMZw&e=1507788214&fn=sogoupinyin_2.1.0.0086_amd64.deb
 echo -e "Install sougoupinyin,Please wait...\c"
-sleep 300
+sleep 3
 sudo dpkg -i sogoupinyin*
 sudo apt-get -yf install 
 sudo dpkg -i sogoupinyin*
+rm sogoupinyin_2.1.0.0086_amd64.deb*
 sleep 3
 
 # 安装系统监视软件sysmonitor
