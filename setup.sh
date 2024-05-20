@@ -230,25 +230,40 @@ sleep 3
 
 sudo apt install -y figlet #将字符串在终端生成一个logo的终端工具
 
-#gnome extensions
-echo -e "\033[46;37minstall gnome \033[0m"
-sudo apt install -y gnome-shell-extension-manager
-sudo apt-get install -y chrome-gnome-shell 
-echo -e "\033[46;37minstall gnome \033[0m"
-#gnome extensions
-#桌面环境配置
-gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "[]" # disable Alt+F1
-gsettings set org.gnome.settings-daemon.plugins.media-keys terminal  "['<Alt>t']" # change alt+ctrl+t -> alt+t
-gsettings set org.gnome.desktop.wm.keybindings activate-window-menu "[]" # disable window  menu
-# 关闭窗口动画效果
-gsettings set org.gnome.desktop.interface enable-animations false 
 
+# 更新系统并安装必要的依赖
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y git gnome-tweaks gnome-shell-extensions
 
+# 下载并安装WhiteSur主题
+git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+cd WhiteSur-gtk-theme
+./install.sh -c dark -c light -t all
 
-echo -e "\033[46;37minstall Termius \033[0m"
-wget --show-progress -O  termius.deb https://autoupdate.termius.com/linux/Termius.deb
-sudo apt install -y ./termius.deb
-sudo rm ./termius.deb
+# 下载并安装WhiteSur图标
+git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
+cd WhiteSur-icon-theme
+./install.sh
+
+# 下载并安装WhiteSur光标
+git clone https://github.com/vinceliuice/WhiteSur-cursors.git
+cd WhiteSur-cursors
+./install.sh
+
+# 安装GNOME扩展
+git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+cd WhiteSur-gtk-theme
+./install.sh --gdm
+
+# 应用主题和图标
+gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-dark"
+gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
+gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
+gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
+
+# 提示完成
+echo "GNOME WhiteSur主题安装和配置完成，请重新启动系统以应用更改。"
 
 sleep 3
 
@@ -257,13 +272,18 @@ sleep 3
 echo -e "\033[46;37minstall clash \033[0m"
 
 # 下载 Clash (使用新的下载地址)
-CLASH_VERSION="1.3.8"
+CLASH_VERSION="1.3.0"
 ARCH="amd64"
-wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
 
-# 授予可执行权限并移动到 /usr/local/bin
-chmod +x clash-verge.AppImage
-sudo mv clash-verge.AppImage /usr/local/bin/clash-verge
+if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" != "1.3.8" ]; then
+  wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
+  # 授予可执行权限并移动到 /usr/local/bin
+  chmod +x clash-verge.AppImage
+  sudo mv clash-verge.AppImage /usr/local/bin/clash-verge
+else
+  wget https://github.com/zzzgydi/clash-verge/releases/download/v${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.deb -O clash-verge.deb
+  sudo dpkg -i clash-verge.deb
+fi
 
 # 创建 systemd 服务文件
 sudo tee /etc/systemd/system/clash-verge.service > /dev/null <<EOF
@@ -319,6 +339,13 @@ source ~/.bashrc
 rm clion.tar.gz
 
 echo -e "\033[46;37mCLion 安装完成。你可以通过应用菜单或命令 clion 启动 CLion。 \033[0m"
+
+
+# install miniconda
+echo -e "\033[46;37m Miniconda3 暂时没有安装 \033[0m"
+# wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+# chmod +x Miniconda3-latest-Linux-x86_64.sh
+# ./Miniconda3-latest-Linux-x86_64.sh
 
 
 echo ""
