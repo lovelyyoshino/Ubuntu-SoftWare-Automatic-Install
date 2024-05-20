@@ -275,7 +275,7 @@ echo -e "\033[46;37minstall clash \033[0m"
 CLASH_VERSION="1.3.0"
 ARCH="amd64"
 
-if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" != "1.3.8" ]; then
+if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" = "1.3.8" ] && [ "$CLASH_VERSION" != "1.3.8" ]; then
   wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
   # 授予可执行权限并移动到 /usr/local/bin
   chmod +x clash-verge.AppImage
@@ -284,6 +284,10 @@ else
   wget https://github.com/zzzgydi/clash-verge/releases/download/v${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.deb -O clash-verge.deb
   sudo dpkg -i clash-verge.deb
 fi
+
+https://github.com/zzzgydi/clash-verge/releases/download/v1.3.0/clash-verge_1.3.0_amd64.deb
+https://github.com/zzzgydi/clash-verge/releases/download/v1.3.0/clash-verge_1.3.0_amd64.deb
+https://github.com/zzzgydi/clash-verge/releases/download/v1.2.0/clash-verge_1.2.0_amd64.deb
 
 # 创建 systemd 服务文件
 sudo tee /etc/systemd/system/clash-verge.service > /dev/null <<EOF
@@ -307,6 +311,8 @@ sudo systemctl enable clash-verge
 sudo systemctl start clash-verge
 
 echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
+
+
 
 echo -e "\033[46;37minstall clion \033[0m"
 # 下载 CLion (从 JetBrains 官方网站)
