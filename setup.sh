@@ -269,49 +269,52 @@ sleep 3
 
 
 # https://github.com/clashdownload/Clash_Verge/releases
-echo -e "\033[46;37minstall clash \033[0m"
-# 下载 Clash (使用新的下载地址)
+echo -e "\033[46;37minstall clash verge \033[0m"
+
+# 设置 Clash Verge 版本号和架构
 CLASH_VERSION="1.3.0"
 ARCH="amd64"
 
-# 更新系统并安装必要的软件
-sudo apt update && sudo apt upgrade -y
-sudo apt install -y wget gzip
+# 下载 Clash Verge (使用新的下载地址)
+if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" = "1.3.8" ] && [ "$CLASH_VERSION" != "1.3.8" ]; then
+  wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
+else
+  wget https://github.com/zzzgydi/clash-verge/releases/download/v${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
+fi
 
-# 下载并解压 Clash 二进制文件
-CLASH_VERSION="v1.18.0"
-wget https://github.com/Dreamacro/clash/releases/download/$CLASH_VERSION/clash-linux-$ARCH-$CLASH_VERSION.gz
-gzip -d clash-linux-amd64-$CLASH_VERSION.gz
-sudo mv clash-linux-amd64-$CLASH_VERSION /usr/local/bin/clash
-sudo chmod +x /usr/local/bin/clash
+# 移动并设置权限
+sudo mv clash-verge.AppImage /opt/clash-verge.AppImage
+sudo chmod +x /opt/clash-verge.AppImage
+sudo chown $USER:$USER /opt/clash-verge.AppImage
+sudo ln -fs /opt/clash-verge.AppImage /usr/local/bin/clash-verge
 
-# 创建配置文件目录
-sudo mkdir -p /etc/clash
-sudo touch /etc/clash/config.yaml
-# 可以根据需要修改config.yaml内容
+# 创建配置目录
+mkdir -p /home/$USER/.config/clash
 
-# 创建 Systemd 服务文件
-sudo bash -c 'cat << EOF > /etc/systemd/system/clash.service
+# 设置系统服务文件
+sudo bash -c 'cat > /etc/systemd/system/clash-verge.service <<EOF
 [Unit]
-Description=Clash daemon, A rule-based proxy in Go.
+Description=Clash Verge daemon, a rule-based proxy in Go.
 After=network-online.target
 
 [Service]
 Type=simple
-Restart=always
-ExecStart=/usr/local/bin/clash -d /etc/clash
+ExecStart=/opt/clash-verge.AppImage -d /home/$USER/.config/clash
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
 EOF'
 
-# 重载 Systemd 并设置 Clash 开机自动启动
-sudo systemctl daemon-reload
-sudo systemctl enable clash
-sudo systemctl start clash
 
-# 检查 Clash 服务状态
-sudo systemctl status clash
+# 重新加载 systemd 并启用 Clash Verge 服务
+sudo systemctl daemon-reload
+sudo systemctl enable clash-verge
+sudo systemctl start clash-verge
+
+# 检查服务状态
+sudo systemctl status clash-verge
 
 
 echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
