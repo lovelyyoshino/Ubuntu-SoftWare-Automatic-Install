@@ -270,7 +270,8 @@ sleep 3
 
 # https://github.com/clashdownload/Clash_Verge/releases
 echo -e "\033[46;37minstall clash \033[0m"
-
+sudo apt-get install libayatana-indicator3-7
+sudo apt --fix-broken install libayatana-appindicator3-1
 # 下载 Clash (使用新的下载地址)
 CLASH_VERSION="1.3.0"
 ARCH="amd64"
