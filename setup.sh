@@ -272,7 +272,7 @@ sleep 3
 echo -e "\033[46;37minstall clash verge \033[0m"
 
 # 设置 Clash Verge 版本号和架构
-CLASH_VERSION="1.3.0"
+CLASH_VERSION="1.2.0"
 ARCH="amd64"
 
 # 下载 Clash Verge (使用新的下载地址)
