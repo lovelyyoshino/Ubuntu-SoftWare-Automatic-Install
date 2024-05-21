@@ -270,46 +270,49 @@ sleep 3
 
 # https://github.com/clashdownload/Clash_Verge/releases
 echo -e "\033[46;37minstall clash \033[0m"
-sudo apt-get install libayatana-indicator3-7
-sudo apt --fix-broken install libayatana-appindicator3-1
 # 下载 Clash (使用新的下载地址)
 CLASH_VERSION="1.3.0"
 ARCH="amd64"
 
-if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" = "1.3.8" ] && [ "$CLASH_VERSION" != "1.3.8" ]; then
-  wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
-  # 授予可执行权限并移动到 /usr/local/bin
-  chmod +x clash-verge.AppImage
-  sudo mv clash-verge.AppImage /usr/local/bin/clash-verge
-else
-  wget https://github.com/zzzgydi/clash-verge/releases/download/v${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.deb -O clash-verge.deb
-  sudo dpkg -i clash-verge.deb
-fi
+# 更新系统并安装必要的软件
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y wget gzip
 
-https://github.com/zzzgydi/clash-verge/releases/download/v1.3.0/clash-verge_1.3.0_amd64.deb
-https://github.com/zzzgydi/clash-verge/releases/download/v1.3.0/clash-verge_1.3.0_amd64.deb
-https://github.com/zzzgydi/clash-verge/releases/download/v1.2.0/clash-verge_1.2.0_amd64.deb
+# 下载并解压 Clash 二进制文件
+CLASH_VERSION="v1.18.0"
+wget https://github.com/Dreamacro/clash/releases/download/$CLASH_VERSION/clash-linux-$ARCH-$CLASH_VERSION.gz
+gzip -d clash-linux-amd64-$CLASH_VERSION.gz
+sudo mv clash-linux-amd64-$CLASH_VERSION /usr/local/bin/clash
+sudo chmod +x /usr/local/bin/clash
 
-# 创建 systemd 服务文件
-sudo tee /etc/systemd/system/clash-verge.service > /dev/null <<EOF
+# 创建配置文件目录
+sudo mkdir -p /etc/clash
+sudo touch /etc/clash/config.yaml
+# 可以根据需要修改config.yaml内容
+
+# 创建 Systemd 服务文件
+sudo bash -c 'cat << EOF > /etc/systemd/system/clash.service
 [Unit]
-Description=Clash Verge Daemon
-After=network.target
+Description=Clash daemon, A rule-based proxy in Go.
+After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/clash-verge -d /home/$USER/.config/clash
-Restart=on-failure
-RestartSec=5s
+Restart=always
+ExecStart=/usr/local/bin/clash -d /etc/clash
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOF'
 
-# 启用并启动 Clash Verge 服务
+# 重载 Systemd 并设置 Clash 开机自动启动
 sudo systemctl daemon-reload
-sudo systemctl enable clash-verge
-sudo systemctl start clash-verge
+sudo systemctl enable clash
+sudo systemctl start clash
+
+# 检查 Clash 服务状态
+sudo systemctl status clash
+
 
 echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
 
