@@ -239,22 +239,26 @@ sudo apt install -y git gnome-tweaks gnome-shell-extensions
 # 下载并安装WhiteSur主题
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 cd WhiteSur-gtk-theme
-./install.sh -c dark -c light -t all
+./install.sh
+cd ..
 
 # 下载并安装WhiteSur图标
 git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
 cd WhiteSur-icon-theme
 ./install.sh
+cd ..
 
 # 下载并安装WhiteSur光标
 git clone https://github.com/vinceliuice/WhiteSur-cursors.git
 cd WhiteSur-cursors
 ./install.sh
+cd ..
 
 # 安装GNOME扩展
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
 cd WhiteSur-gtk-theme
-./install.sh --gdm
+./install.sh
+cd ..
 
 # 应用主题和图标
 gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-dark"
