@@ -81,6 +81,7 @@
 18. **安装 Clash**
 19. **安装 CLion**
 20. **安装 Miniconda**
+21. **安装 Turmius**
 
 ### 示例
 
