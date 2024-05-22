@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.0.0                             #"
+echo "#                                 V 3.0.1                            #"
 echo "#######################################################################"
 echo ""
 
@@ -60,7 +60,8 @@ install_all() {
   install_whitesur_theme
   install_clash
   install_clion
-  echo -e "\033[46;37mAll installations completed! \033[0m"
+  install_termius
+  echo -e "\033[46;37mAll installations 安装完成。\033[0m"
 }
 
 # Function to update the system
@@ -69,6 +70,7 @@ update_system() {
   sudo apt-get update -y
   sudo apt-get upgrade -y
   sleep 3
+  echo -e "\033[46;37mupdate system 安装完成。 \033[0m"
 }
 
 # Function to install basic tools
@@ -79,10 +81,12 @@ install_basic_tools() {
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
   sudo apt update -y && sudo apt install sticky -y
   sleep 3
+  echo -e "\033[46;37minstall basic tools 安装完成。 \033[0m"
 }
 
 # Function to install Docker
 install_docker() {
+  echo -e "\033[46;37minstall docker \033[0m"
   sudo apt-get remove docker docker-engine docker.io
   sudo apt-get update
   sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
@@ -92,6 +96,7 @@ install_docker() {
   echo -e "\033[46;37minstall docker.io \033[0m"
   sudo apt-get install docker-ce -y
   sleep 3
+  echo -e "\033[46;37minstall docker-compose 安装完成。 \033[0m"
 }
 
 # Function to install Terminator
@@ -99,6 +104,7 @@ install_terminator() {
   echo -e "\033[46;37minstall terminator \033[0m"
   sudo apt-get install terminator -y
   sleep 3
+  echo -e "\033[46;37minstall terminator 安装完成。 \033[0m"
 }
 
 # Function to install Sougou
@@ -114,22 +120,27 @@ install_sougou() {
   sudo apt-get -yf install -y 
   sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
   sleep 3
+  echo -e "\033[46;37minstall sougou 安装完成。 \033[0m"
 }
 
 # Function to install system monitor
 install_sysmonitor() {
+  echo -e "\033[46;37minstall system monitor \033[0m"
   sudo apt-get purge -y unity-webapps-common
   sudo add-apt-repository -y ppa:fossfreedom/indicator-sysmonitor  
   sudo apt-get update  
   sudo apt-get install -y indicator-sysmonitor
   indicator-sysmonitor &
+  sleep 3
+  echo -e "\033[46;37minstall system monitor 安装完成。 \033[0m"
 }
 
 # Function to install GIMP
 install_gimp() {
   echo -e "\033[46;37minstall picture edit gimp start \033[0m"
   sudo apt install gimp -y
-  echo -e "\033[46;37minstall picture edit gimp end \033[0m"
+  sleep 3
+  echo -e "\033[46;37minstall picture edit gimp 安装完成。 \033[0m"
 }
 
 # Function to install VS Code
@@ -142,10 +153,12 @@ install_vscode() {
   sudo apt-get -y install code
   echo -e "\033[46;37m VS code was installed successfully! \033[0m"
   sleep 3
+  echo -e "\033[46;37minstall VS code 安装完成。 \033[0m"
 }
 
 # Function to install Sublime Text
 install_sublime() {
+  echo -e "\033[46;37minstall sublime text \033[0m"
   wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
   sudo apt-get install -y apt-transport-https
   echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
@@ -153,6 +166,7 @@ install_sublime() {
   sudo apt-get -y install sublime-text
   echo -e "\033[46;37m The sublime text3 was installed successfully! \033[0m"
   sleep 3
+  echo -e "\033[46;37minstall sublime text 安装完成。 \033[0m"
 }
 
 # Function to install Flameshot
@@ -160,6 +174,7 @@ install_flameshot() {
   echo -e "\033[46;37minstall flameshot \033[0m"
   sudo apt-get install flameshot -y
   sleep 3
+  echo -e "\033[46;37minstall flameshot 安装完成。 \033[0m"
 }
 
 # Function to install Typora
@@ -170,10 +185,12 @@ install_typora() {
   sudo apt-get update
   sudo apt-get install -y typora
   sleep 3
+  echo -e "\033[46;37minstall markdown editor Typora 安装完成。 \033[0m"
 }
 
 # Function to install Netease Cloud Music
 install_netease_music() {
+  echo -e "\033[46;37mInstall Netease Cloud Music \033[0m"
   wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb 
   echo -e "Install netease-cloud-music,Please wait...\c"
   sleep 3
@@ -181,15 +198,19 @@ install_netease_music() {
   sudo apt-get -yf install -y
   sudo dpkg -i netease-cloud-music*
   sleep 3
+  echo -e "\033[46;37m Netease Cloud Music 安装完成。 \033[0m"
 }
 
 # Function to install Google Chrome
 install_chrome() {
+  echo -e "\033[46;37mInstall Google Chrome \033[0m"
   wget -q -O - http://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   sudo apt-get update
   sudo apt-get -y install google-chrome-stable
   sudo apt-get purge firefox firefox-locale* unity-scope-firefoxbook -y
+  sleep 3
+  echo -e "\033[46;37m Google Chrome 安装完成。 \033[0m"
 }
 
 # Function to install Meld
@@ -197,6 +218,7 @@ install_meld() {
   echo -e "\033[46;37minstall meld \033[0m"
   sudo apt-get install meld -y
   sleep 3
+  echo -e "\033[46;37minstall meld 安装完成。 \033[0m"
 }
 
 # Function to install Kazam
@@ -204,15 +226,29 @@ install_kazam() {
   echo -e "\033[46;37minstall kazam \033[0m"
   sudo apt install kazam -y
   sleep 3
+  echo -e "\033[46;37minstall kazam 安装完成。 \033[0m"
 }
 
 # Function to install Figlet
 install_figlet() {
+  echo -e "\033[46;37minstall Figlet \033[0m"
   sudo apt install -y figlet
+  sleep 3
+  echo -e "\033[46;37mFiglet 安装完成。 \033[0m"
+}
+
+install_termius{
+    echo -e "\033[46;37minstall Termius \033[0m"
+    wget --show-progress -O  termius.deb https://autoupdate.termius.com/linux/Termius.deb
+    sudo apt install -y ./termius.deb
+    sudo rm ./termius.deb
+    sleep 3
+    echo -e "\033[46;37mTermius 安装完成。 \033[0m"
 }
 
 # Function to install WhiteSur theme
 install_whitesur_theme() {
+  echo -e "\033[46;37minstall WhiteSur theme \033[0m"
   sudo apt update
   sudo apt upgrade -y
   sudo apt install -y git gnome-tweaks gnome-shell-extensions
@@ -234,10 +270,12 @@ install_whitesur_theme() {
   gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
   echo "GNOME WhiteSur主题安装和配置完成，请重新启动系统以应用更改。"
   sleep 3
+  echo -e "\033[46;37mWhiteSur theme 安装完成。 \033[0m"
 }
 
 # Function to install Clash
 install_clash() {
+  echo -e "\033[46;37minstall Clash \033[0m"
   sudo apt-get install libayatana-indicator3-7 -y
   sudo apt --fix-broken install libayatana-appindicator3-1 -y
   CLASH_VERSION="1.3.0"
@@ -297,10 +335,12 @@ EOF
 
 # Function to install Miniconda
 install_miniconda() {
-  echo -e "\033[46;37m Miniconda3 暂时没有安装 \033[0m"
+  echo -e "\033[46;37m Miniconda3  \033[0m"
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   chmod +x Miniconda3-latest-Linux-x86_64.sh
   ./Miniconda3-latest-Linux-x86_64.sh
+  sleep 3
+  echo -e "\033[46;37m Miniconda3 安装完成。 \033[0m"
 }
 
 echo  -e "\033[34m 这里是主程序，具体是----------
@@ -323,7 +363,8 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 17：安装WhiteSur主题
 18：安装Clash
 19：安装CLion
-20：安装Miniconda\033[0m"
+20：安装Miniconda
+21：安装Termius\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
@@ -416,6 +457,9 @@ else
         install_miniconda
         ;;
       *)
+      21)
+        update_system
+        install_termius
         echo "Unknown option: $arg"
         ;;
     esac
