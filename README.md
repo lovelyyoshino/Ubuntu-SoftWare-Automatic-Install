@@ -97,5 +97,3 @@
    ```bash
    ./setup.bash 1 3 8
    ```
-
-if [ -f "${SOURCE_FILE}" ]; then
