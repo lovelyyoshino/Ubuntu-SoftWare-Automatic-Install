@@ -456,11 +456,13 @@ else
         update_system
         install_miniconda
         ;;
-      *)
       21)
         update_system
         install_termius
         echo "Unknown option: $arg"
+        ;;
+      *)
+        install_all
         ;;
     esac
   done
