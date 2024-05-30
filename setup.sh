@@ -79,7 +79,7 @@ install_basic_tools() {
   sudo apt-get install git curl wget gdebi vim unzip -y
   sudo apt-get install tree htop rar ssh sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
-  sudo apt update -y && sudo apt install sticky -y
+  sudo apt update -y && sudo apt-get purge sticky -y
   sleep 3
   echo -e "\033[46;37minstall basic tools 安装完成。 \033[0m"
 }
