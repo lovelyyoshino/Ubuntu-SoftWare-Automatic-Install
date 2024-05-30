@@ -237,7 +237,7 @@ install_figlet() {
   echo -e "\033[46;37mFiglet 安装完成。 \033[0m"
 }
 
-install_termius{
+install_termius() {
     echo -e "\033[46;37minstall Termius \033[0m"
     wget --show-progress -O  termius.deb https://autoupdate.termius.com/linux/Termius.deb
     sudo apt install -y ./termius.deb
