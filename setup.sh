@@ -61,6 +61,7 @@ install_all() {
   install_clash
   install_clion
   install_termius
+  install_systemback
   echo -e "\033[46;37mAll installations 安装完成。\033[0m"
 }
 
@@ -343,6 +344,13 @@ install_miniconda() {
   echo -e "\033[46;37m Miniconda3 安装完成。 \033[0m"
 }
 
+install_systemback() {
+sudo sh -c 'echo "deb [arch=amd64] http://mirrors.bwbot.org/ stable main" > /etc/apt/sources.list.d/systemback.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 50B2C005A67B264F
+sudo apt-get update
+sudo apt-get install systemback
+}
+
 echo  -e "\033[34m 这里是主程序，具体是----------
 1：更新系统 
 2：安装基础工具
@@ -364,7 +372,8 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 18：安装Clash
 19：安装CLion
 20：安装Miniconda
-21：安装Termius\033[0m"
+21：安装Termius\033[0m
+22: 安装systemback\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
