@@ -372,7 +372,7 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 18：安装Clash
 19：安装CLion
 20：安装Miniconda
-21：安装Termius\033[0m
+21：安装Termius
 22: 安装systemback\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
@@ -468,9 +468,13 @@ else
       21)
         update_system
         install_termius
-        echo "Unknown option: $arg"
+        ;;
+      22)
+        update_system
+        install_systemback
         ;;
       *)
+        echo "Unknown option: $arg"
         install_all
         ;;
     esac
