@@ -349,6 +349,7 @@ sudo sh -c 'echo "deb [arch=amd64] http://mirrors.bwbot.org/ stable main" > /etc
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key 50B2C005A67B264F
 sudo apt-get update
 sudo apt-get install systemback
+  echo -e "\033[46;37m   使用教程请参考：https://blog.csdn.net/FourthBro/article/details/131020408     \033[0m"
 }
 
 echo  -e "\033[34m 这里是主程序，具体是----------
