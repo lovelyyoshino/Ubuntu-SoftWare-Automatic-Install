@@ -120,7 +120,10 @@ install_sougou() {
   sudo apt-get --fix-broken install -y
   sudo apt-get -yf install -y 
   sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
+  sudo cp /usr/share/applications/fcitx.desktop /etc/xdg/autostart/
+  sudo apt remove --purge ibus
   sleep 3
+  # https://blog.csdn.net/Mr_Sudo/article/details/124874239
   echo -e "\033[46;37minstall sougou 安装完成。 \033[0m"
 }
 
