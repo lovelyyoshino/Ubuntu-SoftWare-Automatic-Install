@@ -258,7 +258,7 @@ install_whitesur_theme() {
   sudo apt install -y git gnome-tweaks gnome-shell-extensions
   git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
   cd WhiteSur-gtk-theme
-  ./install.sh -c dark -c light -t all
+  ./install.sh -c Light -t all
   git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
   cd WhiteSur-icon-theme
   ./install.sh
@@ -267,7 +267,7 @@ install_whitesur_theme() {
   ./install.sh
   git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
   cd WhiteSur-gtk-theme
-  ./install.sh --gdm
+  ./install.sh -t all -N glassy -s 220
   gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-dark"
   gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
   gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
