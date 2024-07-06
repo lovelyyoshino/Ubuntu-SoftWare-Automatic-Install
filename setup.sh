@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.0.1                            #"
+echo "#                                 V 3.0.2                             #"
 echo "#######################################################################"
 echo ""
 
@@ -91,11 +91,22 @@ install_docker() {
   sudo apt-get remove docker docker-engine docker.io
   sudo apt-get update
   sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+  #sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  sudo add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu focal stable"
   sudo apt-get update
   echo -e "\033[46;37minstall docker.io \033[0m"
   sudo apt-get install docker-ce -y
+  sudo mkdir -p /etc/docker
+  sudo tee /etc/docker/daemon.json <<-'EOF'
+  {
+    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com"]
+  }
+EOF
+
+  sudo systemctl daemon-reload
+  sudo systemctl restart docker
   sleep 3
   echo -e "\033[46;37minstall docker-compose 安装完成。 \033[0m"
 }
@@ -115,11 +126,10 @@ install_sougou() {
   sudo apt-get autoremove -y
   sudo apt install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2 libgsettings-qt1 fcitx-bin fcitx-table im-config fcitx -y
   im-config -n fcitx
-  wget https://ime.sogoucdn.com/dl/index/1612260778/sogoupinyin_2.4.0.3469_amd64.deb
-  sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
+  wget https://ime-sec.gtimg.com/202407061952/44fd3f78006f9c44b462770713ca46b0/pc/dl/gzindex/1680521603/sogoupinyin_4.2.1.145_amd64.deb
+  sudo dpkg -i sogoupinyin_4.2.1.145_amd64.deb
   sudo apt-get --fix-broken install -y
   sudo apt-get -yf install -y 
-  sudo dpkg -i sogoupinyin_2.4.0.3469_amd64.deb
   sudo cp /usr/share/applications/fcitx.desktop /etc/xdg/autostart/
   sudo apt remove --purge ibus
   sleep 3
@@ -257,7 +267,7 @@ install_whitesur_theme() {
   sudo apt upgrade -y
   sudo apt install -y git gnome-tweaks gnome-shell-extensions
   git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-  cd WhiteSur-gtk-theme
+  cd WhiteSur-gtk-themea
   ./install.sh -c Light -t all
   git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
   cd WhiteSur-icon-theme
@@ -282,7 +292,7 @@ install_clash() {
   echo -e "\033[46;37minstall Clash \033[0m"
   sudo apt-get install libayatana-indicator3-7 -y
   sudo apt --fix-broken install libayatana-appindicator3-1 -y
-  CLASH_VERSION="1.3.0"
+  CLASH_VERSION="1.2.0"
   ARCH="amd64"
   if [ "$(printf '%s\n' "$CLASH_VERSION" "1.3.8" | sort -V | head -n1)" = "1.3.8" ] && [ "$CLASH_VERSION" != "1.3.8" ]; then
     wget https://github.com/clashdownload/Clash_Verge/releases/download/${CLASH_VERSION}/clash-verge_${CLASH_VERSION}_${ARCH}.AppImage -O clash-verge.AppImage
