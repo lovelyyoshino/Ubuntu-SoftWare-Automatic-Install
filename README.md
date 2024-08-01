@@ -1,4 +1,4 @@
-# Ubuntu 配置脚本 README
+# Ubuntu 配置脚本 全功能美化一键安装
 
 ## 介绍
 
