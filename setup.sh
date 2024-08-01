@@ -322,7 +322,34 @@ EOF
   echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
 }
 
-# Function to install CLion
+# Function to install PyCharm
+install_pycharm() {
+  echo -e "\033[46;37minstall pycharm \033[0m"
+  PYCHARM_VERSION="2023.3.3"
+  wget https://download.jetbrains.com/python/pycharm-professional-${PYCHARM_VERSION}.tar.gz -O pycharm.tar.gz
+  sudo tar -xzf pycharm.tar.gz -C /opt
+  sudo mv /opt/pycharm-${PYCHARM_VERSION} /opt/pycharm
+  sudo tee /usr/share/applications/pycharm.desktop > /dev/null <<EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=PyCharm
+Icon=/opt/pycharm/bin/pycharm.svg
+Exec="/opt/pycharm/bin/pycharm.sh" %f
+Comment=PyCharm IDE
+Categories=Development;IDE;
+Terminal=false
+StartupWMClass=pycharm
+EOF
+  echo 'export PATH=/opt/pycharm/bin:$PATH' >> ~/.bashrc
+  source ~/.bashrc
+  rm pycharm.tar.gz
+  echo -e "\033[46;37mPyCharm 安装完成。你可以通过应用菜单或命令 pycharm 启动 PyCharm。 \033[0m"
+}
+
+
+
+# Function to install CLion，激活：https://www.javatiku.cn/tools/7646.html
 install_clion() {
   echo -e "\033[46;37minstall clion \033[0m"
   CLION_VERSION="2023.1.1"
@@ -366,15 +393,15 @@ sudo apt-get install systemback
 }
 
 echo  -e "\033[34m 这里是主程序，具体是----------
-1：更新系统 
-2：安装基础工具
-3：安装docker
-4：安装terminator
-5：安装搜狗输入法
-6：安装系统监视器
-7：安装GIMP
-8：安装VS Code
-9：安装Sublime Text
+1：  更新系统 
+2：  安装基础工具
+3：  安装docker
+4：  安装terminator
+5：  安装搜狗输入法
+6：  安装系统监视器
+7：  安装GIMP
+8：  安装VS Code
+9：  安装Sublime Text
 10：安装Flameshot
 11：安装Typora
 12：安装网易云音乐
@@ -387,7 +414,8 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 19：安装CLion
 20：安装Miniconda
 21：安装Termius
-22: 安装systemback\033[0m"
+22:   安装systemback
+23:   安装Pycharm\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
@@ -486,6 +514,10 @@ else
       22)
         update_system
         install_systemback
+        ;;
+      23)
+        update_system
+        install_pycharm
         ;;
       *)
         echo "Unknown option: $arg"
