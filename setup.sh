@@ -342,6 +342,7 @@ Terminal=false
 StartupWMClass=pycharm
 EOF
   echo 'export PATH=/opt/pycharm/bin:$PATH' >> ~/.bashrc
+  sudo ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm
   source ~/.bashrc
   rm pycharm.tar.gz
   echo -e "\033[46;37mPyCharm 安装完成。你可以通过应用菜单或命令 pycharm 启动 PyCharm。 \033[0m"
@@ -349,7 +350,8 @@ EOF
 
 
 
-# Function to install CLion，激活：https://www.javatiku.cn/tools/7646.html
+# Function to install CLion: https://blog.idejihuo.com/jetbrains/pycharm-2024-1-3-activation-code-latest-crack-tutorial-crack-tool.html
+# 激活：http://jets.idejihuo.com/v2/
 install_clion() {
   echo -e "\033[46;37minstall clion \033[0m"
   CLION_VERSION="2023.1.1"
@@ -369,6 +371,7 @@ Terminal=false
 StartupWMClass=clion
 EOF
   echo 'export PATH=/opt/clion/bin:$PATH' >> ~/.bashrc
+  sudo ln -s /opt/clion/bin/clion.sh /usr/local/bin/clion
   source ~/.bashrc
   rm clion.tar.gz
   echo -e "\033[46;37mCLion 安装完成。你可以通过应用菜单或命令 clion 启动 CLion。 \033[0m"
