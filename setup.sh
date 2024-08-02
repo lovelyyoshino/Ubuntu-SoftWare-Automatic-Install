@@ -279,10 +279,9 @@ install_whitesur_theme() {
   cd WhiteSur-cursors
   ./install.sh
   cd ..
-  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.0/Meslo.tar.xz
-  tar -xJvf Meslo.tar.xz
-  sudo mkdir /usr/local/share/fonts/Meslo
-  sudo mv MesloLG* /usr/local/share/fonts/Meslo
+  wget https://font.download/dl/font/helvetica-255.zip
+  sudo mkdir /usr/local/share/fonts/Helvetica
+  sudo unzip helvetica-255.zip -d /usr/local/share/fonts/Helvetica
   sudo fc-cache -fv
   cd ..
   wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.0/Meslo.tar.xz
@@ -295,6 +294,14 @@ install_whitesur_theme() {
   gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
   gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
   gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
+  # 设置界面字体为 Inter Regular
+  gsettings set org.gnome.desktop.interface font-name 'SF Pro Regular '
+  # 设置文档字体为 Inter Regular
+  gsettings set org.gnome.desktop.interface document-font-name 'Helvetica Normal'
+  # 设置等宽字体为 Roboto Mono Regular
+  gsettings set org.gnome.desktop.interface monospace-font-name 'MesloLGM Nerd Font Regular'
+  # 设置窗口标题字体为 Inter Bold
+  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'SF Pro Bold'
   gsettings set com.canonical.Unity.Launcher launcher-position Bottom
   echo "GNOME WhiteSur主题安装和配置完成，请重新启动系统以应用更改。"
   sleep 3
