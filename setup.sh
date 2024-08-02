@@ -260,7 +260,7 @@ install_termius() {
     echo -e "\033[46;37mTermius 安装完成。 \033[0m"
 }
 
-# Function to install WhiteSur theme
+# Function to install WhiteSur theme: https://www.cnblogs.com/Undefined443/p/18133703
 install_whitesur_theme() {
   echo -e "\033[46;37minstall WhiteSur theme \033[0m"
   sudo apt update
@@ -268,20 +268,34 @@ install_whitesur_theme() {
   sudo apt install -y git gnome-tweaks gnome-shell-extensions
   git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
   cd WhiteSur-gtk-themea
-  ./install.sh -c Light -t all
+  ./install.sh -t all -N glassy -s 220  # 运行安装脚本
+  sudo ./tweaks.sh -g  # 添加主题
+  cd ..
   git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
   cd WhiteSur-icon-theme
   ./install.sh
+  cd ..
   git clone https://github.com/vinceliuice/WhiteSur-cursors.git
   cd WhiteSur-cursors
   ./install.sh
-  git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-  cd WhiteSur-gtk-theme
-  ./install.sh -t all -N glassy -s 220
+  cd ..
+  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.0/Meslo.tar.xz
+  tar -xJvf Meslo.tar.xz
+  sudo mkdir /usr/local/share/fonts/Meslo
+  sudo mv MesloLG* /usr/local/share/fonts/Meslo
+  sudo fc-cache -fv
+  cd ..
+  wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.0/Meslo.tar.xz
+  tar -xJvf Meslo.tar.xz
+  sudo mkdir /usr/local/share/fonts/Meslo
+  sudo mv MesloLG* /usr/local/share/fonts/Meslo
+  sudo fc-cache -fv
+  cd ..
   gsettings set org.gnome.desktop.interface gtk-theme "WhiteSur-dark"
   gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
   gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
   gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
+  gsettings set com.canonical.Unity.Launcher launcher-position Bottom
   echo "GNOME WhiteSur主题安装和配置完成，请重新启动系统以应用更改。"
   sleep 3
   echo -e "\033[46;37mWhiteSur theme 安装完成。 \033[0m"
