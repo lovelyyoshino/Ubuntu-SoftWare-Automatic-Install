@@ -295,14 +295,18 @@ install_whitesur_theme() {
   gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
   gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
   # 设置界面字体为 Inter Regular
-  gsettings set org.gnome.desktop.interface font-name 'SF Pro Regular '
+  gsettings set org.gnome.desktop.interface font-name 'Ubuntu Regular 10'
   # 设置文档字体为 Inter Regular
-  gsettings set org.gnome.desktop.interface document-font-name 'Helvetica Normal'
+  gsettings set org.gnome.desktop.interface document-font-name 'Helvetica Normal 10'
   # 设置等宽字体为 Roboto Mono Regular
-  gsettings set org.gnome.desktop.interface monospace-font-name 'MesloLGM Nerd Font Regular'
+  gsettings set org.gnome.desktop.interface monospace-font-name 'MesloLGM Nerd Font Regular 10'
   # 设置窗口标题字体为 Inter Bold
-  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'SF Pro Bold'
-  gsettings set com.canonical.Unity.Launcher launcher-position Bottom
+  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Ubuntu Bold 10' 
+  # https://www.sohu.com/a/411567625_495675
+  gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+  gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+  gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top true
+  gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.3
   echo "GNOME WhiteSur主题安装和配置完成，请重新启动系统以应用更改。"
   sleep 3
   echo -e "\033[46;37mWhiteSur theme 安装完成。 \033[0m"
@@ -417,34 +421,33 @@ sudo apt-get install systemback
 }
 
 echo  -e "\033[34m 这里是主程序，具体是----------
-1：  更新系统 
-2：  安装基础工具
-3：  安装docker
-4：  安装terminator
-5：  安装搜狗输入法
-6：  安装系统监视器
-7：  安装GIMP
-8：  安装VS Code
-9：  安装Sublime Text
-10：安装Flameshot
-11：安装Typora
-12：安装网易云音乐
-13：安装Chrome
-14：安装Meld
-15：安装Kazam
-16：安装Figlet
-17：安装WhiteSur主题
-18：安装Clash
-19：安装CLion
-20：安装Miniconda
-21：安装Termius
-22:   安装systemback
-23:   安装Pycharm\033[0m"
+1：   更新系统 
+2：   安装基础工具
+3：   安装docker
+4：   安装terminator
+5：   安装搜狗输入法
+6：   安装系统监视器
+7：   安装GIMP
+8：   安装VS Code
+9：   安装Sublime Text
+10：  安装Flameshot
+11：  安装Typora
+12：  安装网易云音乐
+13：  安装Chrome
+14：  安装Meld
+15：  安装Kazam
+16：  安装Figlet
+17：  安装WhiteSur主题
+18：  安装Clash
+19：  安装CLion
+20：  安装Miniconda
+21：  安装Termius
+22：  安装systemback
+23：  安装Pycharm\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
 read -p "请输入数字: " input
-
 # If no input, install all packages
 if [ -z "$input" ]; then
   install_all
