@@ -89,3 +89,27 @@ else
   ln -sf "${MY_VMOPTIONS_SHELL_FILE}" "${KDE_ENV_DIR}/${MY_VMOPTIONS_SHELL_NAME}"
   echo "done. you'd better log off first!"
 fi
+
+#!/bin/bash
+
+# 计算脚本的基础路径
+BASE_PATH=$(dirname $(
+  cd $(dirname "$0")
+  pwd
+))
+
+# 目标路径（使用绝对路径）
+TARGET_PATH="$HOME/linux-clion/linux2022-2023/ja-netfilter.jar"
+TARGET_DIR="$(dirname "$TARGET_PATH")"  # 获取目标文件的目录
+
+# 检查源文件是否存在
+if [ -f "$BASE_PATH/ja-netfilter.jar" ]; then
+    # 创建目标目录（如果不存在）
+    mkdir -p "$TARGET_DIR"
+
+    # 拷贝文件
+    cp "$BASE_PATH/ja-netfilter.jar" "$TARGET_PATH"
+    echo "File copied to $TARGET_PATH"
+else
+    echo "File $BASE_PATH/ja-netfilter.jar does not exist."
+fi
