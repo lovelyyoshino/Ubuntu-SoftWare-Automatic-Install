@@ -81,6 +81,8 @@ install_basic_tools() {
   sudo apt-get install tree htop rar ssh sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
   sudo apt update -y && sudo apt-get purge sticky
+  sudo apt-get install fish  #fish 自动补全工具，不需要zsh了
+  echo 'exec fish' >> ~/.bashrc
   sleep 3
   echo -e "\033[46;37minstall basic tools 安装完成。 \033[0m"
 }
