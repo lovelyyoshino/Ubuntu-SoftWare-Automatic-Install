@@ -380,6 +380,7 @@ EOF
 
 # Function to install CLion: https://blog.idejihuo.com/jetbrains/pycharm-2024-1-3-activation-code-latest-crack-tutorial-crack-tool.html
 # 激活：http://jets.idejihuo.com/v2/
+# 在线激活：https://justsoso.fun/other/JetBrains-License-Server.html
 install_clion() {
   echo -e "\033[46;37minstall clion \033[0m"
   CLION_VERSION="2023.1.1"
