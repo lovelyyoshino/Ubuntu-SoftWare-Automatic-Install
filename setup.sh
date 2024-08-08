@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.0.3                             #"
+echo "#                                 V 3.0.4                             #"
 echo "#######################################################################"
 echo ""
 
@@ -83,6 +83,7 @@ install_basic_tools() {
   sudo apt update -y && sudo apt-get purge sticky
   sudo apt-get install fish  #fish 自动补全工具，不需要zsh了
   echo 'exec fish' >> ~/.bashrc
+  sudo apt install baobab # disk usage analyzer 
   sleep 3
   echo -e "\033[46;37minstall basic tools 安装完成。 \033[0m"
 }
