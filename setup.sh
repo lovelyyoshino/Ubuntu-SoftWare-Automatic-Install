@@ -81,7 +81,7 @@ install_basic_tools() {
   sudo apt-get install tree htop rar ssh sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
   sudo apt update -y && sudo apt-get purge sticky
-  sudo apt-get install fish  #fish 自动补全工具，不需要zsh了
+  sudo apt-get install fish  #fish 自动补全工具，不需要zsh了。这里还可以通过fish_config完成环境配置
   echo 'exec fish' >> ~/.bashrc
   sudo apt install baobab # disk usage analyzer 
   sleep 3
