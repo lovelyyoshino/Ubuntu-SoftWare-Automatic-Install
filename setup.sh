@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.0.4                             #"
+echo "#                                 V 3.0.5                             #"
 echo "#######################################################################"
 echo ""
 
@@ -297,14 +297,14 @@ install_whitesur_theme() {
   gsettings set org.gnome.desktop.interface icon-theme "WhiteSur"
   gsettings set org.gnome.desktop.interface cursor-theme "WhiteSur-cursors"
   gsettings set org.gnome.desktop.wm.preferences theme "WhiteSur-dark"
-  # 设置界面字体为 Inter Regular
-  gsettings set org.gnome.desktop.interface font-name 'Ubuntu Regular 10'
-  # 设置文档字体为 Inter Regular
-  gsettings set org.gnome.desktop.interface document-font-name 'Helvetica Normal 10'
-  # 设置等宽字体为 Roboto Mono Regular
-  gsettings set org.gnome.desktop.interface monospace-font-name 'MesloLGM Nerd Font Regular 10'
-  # 设置窗口标题字体为 Inter Bold
-  gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Ubuntu Bold 10' 
+#   # 设置界面字体为 Inter Regular
+#   gsettings set org.gnome.desktop.interface font-name 'Ubuntu Regular 11'
+#   # 设置文档字体为 Inter Regular
+#   gsettings set org.gnome.desktop.interface document-font-name 'Sans Regular 11'
+#   # 设置等宽字体为 Roboto Mono Regular
+#   gsettings set org.gnome.desktop.interface monospace-font-name 'Sans Regular 11'
+#   # 设置窗口标题字体为 Inter Bold
+#   gsettings set org.gnome.desktop.wm.preferences titlebar-font 'Ubuntu Bold 13' 
   # https://www.sohu.com/a/411567625_495675
   gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
   gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
