@@ -76,12 +76,17 @@
 13. **安装 Google Chrome 浏览器**
 14. **安装 Meld 比较工具**
 15. **安装 Kazam 屏幕录制工具**
-16. **安装 Figlet**
+16. **安装 Figlet生成大尺寸字母图形**
 17. **安装 WhiteSur 主题**
 18. **安装 Clash**
 19. **安装 CLion**
 20. **安装 Miniconda**
 21. **安装 Turmius**
+22. **安装 systemback系统回退模块**
+23.  **安装drawio绘图软件**
+24.  **安装pycharm（默认不装）**
+25.  **安装kdenlive视频剪辑软件（默认不装）**
+
 
 ### 示例
 
