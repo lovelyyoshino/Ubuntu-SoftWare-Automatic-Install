@@ -3,12 +3,13 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.0.5                             #"
+echo "#                                 V 3.1.0                             #"
 echo "#######################################################################"
 echo ""
 
 echo "详细安装可以参考：https://dora-cmon.github.io/posts/bbf09ec7/"
 echo "额外改进安装可以参考：https://github.com/yxSakana/UbuntuAutoConfigure"
+echo "Ubuntu 其他比较好的脚本：https://github.com/alicfeng/note/blob/master/Linux/%E9%82%A3%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84Linux%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95.md"
 
 # https://github.com/starFalll/Ubuntu_Init/blob/5f1ab6056b92e846a052efcb1dfdb5b7f9807d50/Linux_Init.sh#L2
 Sources=$(lsb_release -rs)
@@ -62,6 +63,7 @@ install_all() {
   install_clion
   install_termius
   install_systemback
+  install_drawio
   echo -e "\033[46;37mAll installations 安装完成。\033[0m"
 }
 
@@ -77,6 +79,8 @@ update_system() {
 # Function to install basic tools
 install_basic_tools() {
   echo -e "\033[46;37minstall basic tools \033[0m"
+  sudo apt-get install vlc
+  sudo apt-get install bleachbit -y
   sudo apt-get install git curl wget gdebi vim unzip -y
   sudo apt-get install tree htop rar ssh sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
@@ -376,7 +380,20 @@ EOF
   echo -e "\033[46;37mPyCharm 安装完成。你可以通过应用菜单或命令 pycharm 启动 PyCharm。 \033[0m"
 }
 
+install_kdenlive(){
+    sudo apt-get install kdenlive
+}
 
+install_drawio(){
+    # 下载 draw.io 的 .deb 文件
+    wget https://github.com/jgraph/drawio-desktop/releases/download/v13.7.9/draw.io-amd64-13.7.9.deb -O draw.io.deb
+    # 安装 draw.io
+    sudo dpkg -i draw.io.deb
+    # 处理依赖关系
+    sudo apt-get install -f
+    # 删除下载的 .deb 文件
+    rm draw.io.deb
+}
 
 # Function to install CLion: https://blog.idejihuo.com/jetbrains/pycharm-2024-1-3-activation-code-latest-crack-tutorial-crack-tool.html
 # 激活：http://jets.idejihuo.com/v2/
@@ -447,7 +464,9 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 20：  安装Miniconda
 21：  安装Termius
 22：  安装systemback
-23：  安装Pycharm\033[0m"
+23：  安装Drawio
+24：  安装Pycharm(Python编辑器，默认不安装)
+25：  安装Kdenlive(视频剪辑，默认不安装)\033[0m"
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
@@ -548,7 +567,15 @@ else
         ;;
       23)
         update_system
+        install_drawio
+        ;;
+      24)
+        update_system
         install_pycharm
+        ;;
+      25)
+        update_system
+        install_kdenlive
         ;;
       *)
         echo "Unknown option: $arg"
