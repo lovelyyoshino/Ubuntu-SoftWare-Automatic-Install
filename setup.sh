@@ -425,10 +425,11 @@ EOF
 
 # Function to install Miniconda
 install_miniconda() {
-  echo -e "\033[46;37m Miniconda3  \033[0m"
+  echo -e "\033[46;37m Miniconda3 直接全部回车即可 \033[0m"
   wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   chmod +x Miniconda3-latest-Linux-x86_64.sh
   ./Miniconda3-latest-Linux-x86_64.sh
+  echo 'export PATH=$HOME/miniconda3/bin:$PATH' >> ~/.bashrc
   sleep 3
   echo -e "\033[46;37m Miniconda3 安装完成。 \033[0m"
 }
