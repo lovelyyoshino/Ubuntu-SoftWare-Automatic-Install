@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.1.0                             #"
+echo "#                                 V 3.1.1                             #"
 echo "#######################################################################"
 echo ""
 
@@ -400,7 +400,7 @@ install_drawio(){
 # 在线激活：https://justsoso.fun/other/JetBrains-License-Server.html
 install_clion() {
   echo -e "\033[46;37minstall clion \033[0m"
-  CLION_VERSION="2023.1.1"
+  CLION_VERSION="2024.2.3"
   wget https://download.jetbrains.com/cpp/CLion-${CLION_VERSION}.tar.gz -O clion.tar.gz
   sudo tar -xzf clion.tar.gz -C /opt
   sudo mv /opt/clion-${CLION_VERSION} /opt/clion
