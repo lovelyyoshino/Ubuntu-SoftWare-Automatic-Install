@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.1.1                             #"
+echo "#                                 V 3.2.0                             #"
 echo "#######################################################################"
 echo ""
 
@@ -14,31 +14,7 @@ echo "Ubuntu 其他比较好的脚本：https://github.com/alicfeng/note/blob/ma
 # https://github.com/starFalll/Ubuntu_Init/blob/5f1ab6056b92e846a052efcb1dfdb5b7f9807d50/Linux_Init.sh#L2
 Sources=$(lsb_release -rs)
 
-if [ "${Sources}" == "22.04" ]; then
-  SOURCE_FILE="source22.04.list"
-elif [ "${Sources}" == "20.04" ]; then
-  SOURCE_FILE="source20.04.list"
-elif [ "${Sources}" == "18.04" ]; then
-  SOURCE_FILE="source18.04.list"
-elif [ "${Sources}" == "16.04" ]; then
-  SOURCE_FILE="source16.04.list"
-elif [ "${Sources}" == "14.04" ]; then
-  SOURCE_FILE="source14.04.list"
-else
-  echo -e "\033[41;37m The system version is not supported! \033[0m" | tee -a errorinit.log
-  echo -e "\033[41;37m (系统版本不支持!) \033[0m" | tee -a errorinit.log
-  echo -e "\033[41;37m 暂时默认支持16.04、18.04、20.04、22.04版本!这里默认替换了22.04版本 \033[0m" | tee -a errorinit.log
-  SOURCE_FILE="source22.04.list"
-fi
 
-if [ -f "${SOURCE_FILE}" ]; then
-  echo -e "\033[46;37mBegin copy \033[0m"
-  sudo cp "${SOURCE_FILE}" /etc/apt/sources.list
-else
-  echo -e "\033[41;37m The sources file which contains Tsinghua sources does not exist! \033[0m" | tee -a errorinit.log
-  echo -e "\033[41;37m (包含清华的源文件不存在!请检查仓库目录下文件是否完整.) \033[0m" | tee -a errorinit.log
-  exit 0
-fi
 
 # Function to install all tools
 install_all() {
@@ -341,7 +317,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/clash-verge -d /home/$USER/.config/clash
+ExecStart=/usr/bin/clash-verge -d /home/$USER/.config/clash
 Restart=on-failure
 RestartSec=5s
 
@@ -353,6 +329,160 @@ EOF
   sudo systemctl start clash-verge
   echo -e "\033[46;37mClash Verge 安装和配置完成。 \033[0m"
 }
+
+install_clash_nyanpasu() {
+  echo -e "\033[46;37mInstalling Clash Nyanpasu... \033[0m"
+  echo -e "\033[46;37m 如果需要解决分流问题，可以参考：https://lainbo.dev/clash-config  \033[0m"
+  # 下载最新的AppImage文件
+  CLASH_VERSION="1.6.1"
+  APPIMAGE_URL="https://github.com/libnyanpasu/clash-nyanpasu/releases/download/v${CLASH_VERSION}/clash-nyanpasu_${CLASH_VERSION}_amd64.deb"
+  
+  wget $APPIMAGE_URL -O clash-nyanpasu.deb
+  if [ $? -ne 0 ]; then
+   echo -e "\033[41;37mFailed to download Clash Nyanpasu. Please check the URL.\033[0m"
+   return 1
+  fi
+
+  # 赋予执行权限
+  chmod +x clash-nyanpasu.deb
+  sudo dpkg -i clash-nyanpasu.deb
+  if [ $? -ne 0 ]; then
+    sudo apt install libwebkit2gtk-4.0-dev
+    echo -e "\033[46;37m Installing dependencies by https://github.com/clash-verge-rev/clash-verge-rev/releases/tag/dependencies ...\033[0m"
+    # 下载并安装 libjavascriptcoregtk-4.0-18
+    wget http://archive.ubuntu.com/ubuntu/pool/universe/liba/libayatana-indicator/libayatana-indicator3-7_0.6.3-1_amd64.deb -O libayatana-indicator3-7_amd64.deb 
+    sudo dpkg -i libayatana-indicator3-7_amd64.deb 
+    rm libayatana-indicator3-7_amd64.deb 
+
+    wget http://ftp.de.debian.org/debian/pool/main/liba/libayatana-appindicator/libayatana-appindicator3-1_0.5.92-1_amd64.deb -O libayatana-appindicator3-1_amd64.deb
+    sudo dpkg -i libayatana-appindicator3-1_amd64.deb
+    rm libayatana-appindicator3-1_amd64.deb
+    sudo dpkg -i clash-nyanpasu.deb
+  fi
+  rm clash-nyanpasu.deb
+
+
+  # 定义库文件的路径
+  LIB_DIR="/usr/lib/x86_64-linux-gnu"
+  LIB_CRYPTO_V3="libcrypto.so.3"
+  LIB_SSL_V3="libssl.so.3"
+  LIB_CRYPTO_V1_1="libcrypto.so.1.1"
+  LIB_SSL_V1_1="libssl.so.1.1"
+  
+  # 检查 libcrypto.so.3 是否存在
+  if [ ! -f "$LIB_DIR/$LIB_CRYPTO_V3" ]; then
+      echo "$LIB_CRYPTO_V3 不存在，检查 libcrypto.so.1.1"
+      if [ -f "$LIB_DIR/$LIB_CRYPTO_V1_1" ]; then
+          echo "创建符号链接 $LIB_CRYPTO_V3 -> $LIB_CRYPTO_V1_1"
+          sudo ln -s "$LIB_DIR/$LIB_CRYPTO_V1_1" "$LIB_DIR/$LIB_CRYPTO_V3"
+      else
+          echo "目标库 $LIB_CRYPTO_V1_1 不存在，无法创建链接。"
+      fi
+  else
+      echo "$LIB_CRYPTO_V3 已存在。"
+  fi
+  
+  # 检查 libssl.so.3 是否存在
+  if [ ! -f "$LIB_DIR/$LIB_SSL_V3" ]; then
+      echo "$LIB_SSL_V3 不存在，检查 libssl.so.1.1"
+      if [ -f "$LIB_DIR/$LIB_SSL_V1_1" ]; then
+          echo "创建符号链接 $LIB_SSL_V3 -> $LIB_SSL_V1_1"
+          sudo ln -s "$LIB_DIR/$LIB_SSL_V1_1" "$LIB_DIR/$LIB_SSL_V3"
+      else
+          echo "目标库 $LIB_SSL_V1_1 不存在，无法创建链接。"
+      fi
+  else
+      echo "$LIB_SSL_V3 已存在。"
+  fi
+
+  # 创建 systemd 服务
+  sudo tee /etc/systemd/system/clash-nyanpasu.service > /dev/null <<EOF
+[Unit]
+Description=Clash Nyanpasu Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/clash-nyanpasu  -d /home/$USER/.config/clash
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  # 重新加载 systemd 服务
+  sudo systemctl daemon-reload
+
+  # 启用并启动服务
+  sudo systemctl enable clash-nyanpasu
+  sudo systemctl start clash-nyanpasu
+
+  echo -e "\033[46;37mClash Nyanpasu 安装和配置完成。\033[0m"
+}
+
+
+install_clash_verge() {
+  echo -e "\033[46;37mInstalling Clash Verge...\033[0m"
+
+  # 定义版本和下载链接
+  CLASH_VERGE_VERSION="2.1.2"
+  DEB_URL="https://github.com/clash-verge-rev/clash-verge-rev/releases/download/v${CLASH_VERGE_VERSION}/Clash.Verge_${CLASH_VERGE_VERSION}_amd64.deb"
+
+  # 下载 .deb 文件
+  wget $DEB_URL -O clash-verge-rev.deb
+  if [ $? -ne 0 ]; then
+    echo -e "\033[41;37mFailed to download Clash Verge. Please check the URL.\033[0m"
+    return 1
+  fi
+
+  # 安装 .deb 文件
+  sudo dpkg -i clash-verge-rev.deb
+  if [ $? -ne 0 ]; then
+    echo -e "\033[46;37m Installing dependencies by https://github.com/clash-verge-rev/clash-verge-rev/releases/tag/dependencies ...\033[0m"
+    # 下载并安装 libjavascriptcoregtk-4.0-18
+    wget https://github.com/clash-verge-rev/clash-verge-rev/releases/download/dependencies/libjavascriptcoregtk-4.0-18_2.43.3-1_amd64.deb -O libjavascriptcoregtk-4.0-18.deb
+    sudo dpkg -i libjavascriptcoregtk-4.0-18.deb
+    rm libjavascriptcoregtk-4.0-18.deb
+
+    # 下载并安装 libwebkit2gtk-4.0-37
+    wget https://github.com/clash-verge-rev/clash-verge-rev/releases/download/dependencies/libwebkit2gtk-4.0-37_2.43.3-1_amd64.deb -O libwebkit2gtk-4.0-37.deb
+    sudo dpkg -i libwebkit2gtk-4.0-37.deb
+    rm libwebkit2gtk-4.0-37.deb
+    
+    sudo dpkg -i clash-verge-rev.deb
+  fi
+
+  # 清理下载的 .deb 文件
+  rm clash-verge-rev.deb
+
+
+  # 创建 systemd 服务
+  sudo tee /etc/systemd/system/clash-verge-rev.service > /dev/null <<EOF
+[Unit]
+Description=Clash Verge Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/clash-verge-rev  -d /home/$USER/.config/clash
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+  # 重新加载 systemd 服务
+  sudo systemctl daemon-reload
+
+  # 启用并启动服务
+  sudo systemctl enable clash-verge-rev
+  sudo systemctl start clash-verge-rev
+
+  echo -e "\033[46;37mClash Verge 安装和自启动配置完成。\033[0m"
+}
+
 
 # Function to install PyCharm
 install_pycharm() {
