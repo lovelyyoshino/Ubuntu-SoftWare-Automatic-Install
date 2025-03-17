@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.0                             #"
+echo "#                                 V 3.2.1                             #"
 echo "#######################################################################"
 echo ""
 
@@ -140,7 +140,7 @@ install_gimp() {
   echo -e "\033[46;37minstall picture edit gimp 安装完成。 \033[0m"
 }
 
-# Function to install VS Code
+# Function to install VS Code：https://code.visualstudio.com/docs/supporting/faq#_previous-release-versions
 install_vscode() {
   echo -e "\033[46;37minstall VS code \033[0m"
   curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -150,7 +150,7 @@ install_vscode() {
   sudo apt-get -y install code
   echo -e "\033[46;37m VS code was installed successfully! \033[0m"
   sleep 3
-  echo -e "\033[46;37minstall VS code 安装完成。 \033[0m"
+  echo -e "\033[46;37minstall VS code 安装完成。如果无法使用请手动下载deb版本，填入对应version即可： https://update.code.visualstudio.com/{version}/linux-deb-x64/stable \033[0m"
 }
 
 # Function to install Sublime Text
