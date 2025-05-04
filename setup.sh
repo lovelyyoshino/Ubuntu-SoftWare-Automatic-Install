@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.1                             #"
+echo "#                                 V 3.2.3                             #"
 echo "#######################################################################"
 echo ""
 
@@ -14,7 +14,9 @@ echo "Ubuntu 其他比较好的脚本：https://github.com/alicfeng/note/blob/ma
 # https://github.com/starFalll/Ubuntu_Init/blob/5f1ab6056b92e846a052efcb1dfdb5b7f9807d50/Linux_Init.sh#L2
 Sources=$(lsb_release -rs)
 
-
+UBUNTU_VERSION=$(lsb_release -rs)
+UBUNTU_MAJOR=$(echo $UBUNTU_VERSION | cut -d. -f1)
+UBUNTU_MINOR=$(echo $UBUNTU_VERSION | cut -d. -f2)
 
 # Function to install all tools
 install_all() {
@@ -35,7 +37,15 @@ install_all() {
   install_kazam
   install_figlet
   install_whitesur_theme
-  install_clash
+  # 如果版本是20.04或更低版本则使用install_clash
+  if (( UBUNTU_MAJOR < 20 )) || (( UBUNTU_MAJOR == 20 && UBUNTU_MINOR <= 4 )); then
+      echo -e "\033[46;37m检测到Ubuntu $UBUNTU_VERSION (<=20.04)，使用install_clash函数\033[0m"
+      install_clash
+  else
+      echo -e "\033[46;37m检测到Ubuntu $UBUNTU_VERSION (>20.04)，使用install_clash_nyanpasu函数\033[0m"
+      install_clash_nyanpasu
+  fi
+#   install_clash
   install_clion
   install_termius
   install_systemback
