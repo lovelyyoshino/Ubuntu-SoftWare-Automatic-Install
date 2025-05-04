@@ -119,7 +119,7 @@ install_sougou() {
   sudo apt-get autoremove -y
   sudo apt install libqt5qml5 libqt5quick5 libqt5quickwidgets5 qml-module-qtquick2 libgsettings-qt1 fcitx-bin fcitx-table im-config fcitx -y
   im-config -n fcitx
-  wget https://ime-sec.gtimg.com/202407061952/44fd3f78006f9c44b462770713ca46b0/pc/dl/gzindex/1680521603/sogoupinyin_4.2.1.145_amd64.deb
+  wget https://benson80.eu.org/sogoupinyin_4.2.1.145_amd64.deb
   sudo dpkg -i sogoupinyin_4.2.1.145_amd64.deb
   sudo apt-get --fix-broken install -y
   sudo apt-get -yf install -y 
