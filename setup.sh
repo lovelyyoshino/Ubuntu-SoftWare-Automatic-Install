@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.3                             #"
+echo "#                                 V 3.3.1                            #"
 echo "#######################################################################"
 echo ""
 
@@ -94,7 +94,20 @@ install_docker() {
   sudo mkdir -p /etc/docker
   sudo tee /etc/docker/daemon.json <<-'EOF'
   {
-    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com"]
+      "registry-mirrors": [
+          "https://do.nark.eu.org",
+          "https://dc.j8.work",
+          "https://docker.m.daocloud.io",
+          "https://dockerproxy.com",
+          "https://docker.mirrors.ustc.edu.cn",
+          "https://docker.nju.edu.cn"
+      ],
+      "runtimes": {
+          "nvidia": {
+              "args": [],
+              "path": "nvidia-container-runtime"
+          }
+      }
   }
 EOF
 
