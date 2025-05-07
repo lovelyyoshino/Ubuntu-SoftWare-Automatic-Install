@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.5                             #"
+echo "#                                 V 3.2.3                             #"
 echo "#######################################################################"
 echo ""
 
@@ -94,11 +94,7 @@ install_docker() {
   sudo mkdir -p /etc/docker
   sudo tee /etc/docker/daemon.json <<-'EOF'
   {
-    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com",
-    "https://docker.m.daocloud.io", 
-    "https://noohub.ru", 
-    "https://huecker.io",
-    "https://dockerhub.timeweb.cloud"]
+    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com"]
   }
 EOF
 
@@ -592,6 +588,61 @@ sudo apt-get install systemback
   echo -e "\033[46;37m   使用教程请参考：https://blog.csdn.net/FourthBro/article/details/131020408     \033[0m"
 }
 
+install_cursor() {
+    APPIMAGE_PATH="/opt/cursor.AppImage"
+    
+    # 检查 Cursor AppImage 是否已安装
+    if [ ! -f $APPIMAGE_PATH ]; then
+        # 提示用户手动下载 Cursor AppImage
+        echo -e "\033[46;37m请访问 $CURSOR_URL 下载 Cursor AppImage，并将其保存为 $APPIMAGE_PATH \033[0m"
+        echo -e "\033[46;37m下载完成后，请确保文件可执行： \033[0m"
+        echo -e "\033[46;37msudo mv Cursor-xxxx-x86_64.AppImage  /opt/cursor.AppImage \033[0m"
+        echo -e "\033[46;37msudo chmod +x $APPIMAGE_PATH \033[0m"
+        echo -e "\033[46;37m然后再次运行此脚本以完成安装。 \033[0m"
+        return
+    fi
+
+    echo -e "\033[46;37m正在安装 Cursor AI IDE... \033[0m"
+    sudo apt-get install -y fuse libfuse2
+    # Cursor AppImage 和图标的下载链接
+    CURSOR_URL="https://www.cursor.com/cn/downloads"  # 更新为正确的下载页面
+    ICON_URL="https://www.cursor.com/apple-touch-icon.png"
+
+    # 安装路径
+    ICON_PATH="/opt/cursor.png"
+    DESKTOP_ENTRY_PATH="/usr/share/applications/cursor.desktop"
+
+    # 检查 curl 是否已安装
+    if ! command -v curl &> /dev/null; then
+        echo -e "\033[46;37mcurl 未安装，正在安装... \033[0m"
+        sudo apt-get update
+        sudo apt-get install -y curl
+    fi
+
+    # 下载 Cursor 图标
+    echo -e "\033[46;37m正在下载 Cursor 图标... \033[0m"
+    sudo wget sudo wget $ICON_URL -O $ICON_PATH
+
+    # 检查 AppImage 文件是否存在，如果存在则创建桌面入口
+    if [ -f $APPIMAGE_PATH ]; then
+        echo -e "\033[46;37m正在创建 Cursor 的 .desktop 入口... \033[0m"
+        sudo bash -c "cat > $DESKTOP_ENTRY_PATH" <<EOL
+[Desktop Entry]
+Name=Cursor AI IDE
+Exec=$APPIMAGE_PATH --no-sandbox
+Icon=$ICON_PATH
+Type=Application
+Categories=Development;
+EOL
+
+        echo -e "\033[46;37mCursor AI IDE 安装完成。你可以通过应用菜单或命令启动 Cursor AI IDE。 \033[0m"
+    else
+        echo -e "\033[46;37mCursor AI IDE 的 AppImage 文件未找到，无法创建桌面入口。请确保下载完成并再次运行此脚本。 \033[0m"
+    fi
+}
+
+
+
 echo  -e "\033[34m 这里是主程序，具体是----------
 1：   更新系统 
 2：   安装基础工具
@@ -617,7 +668,9 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 22：  安装systemback
 23：  安装Drawio
 24：  安装Pycharm(Python编辑器，默认不安装)
-25：  安装Kdenlive(视频剪辑，默认不安装)\033[0m"
+25：  安装Kdenlive(视频剪辑，默认不安装)
+26：  安装 Cursor可视化图标(VsCode进阶版，无法通过直接安装，需要手动下载，然后运行该脚本，默认不安装)\033[0m"
+
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
 # Prompt user for input
@@ -727,6 +780,9 @@ else
       25)
         update_system
         install_kdenlive
+        ;;
+      26)
+        install_cursor
         ;;
       *)
         echo "Unknown option: $arg"
