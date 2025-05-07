@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.3                             #"
+echo "#                                 V 3.2.4                             #"
 echo "#######################################################################"
 echo ""
 
@@ -210,11 +210,17 @@ install_netease_music() {
 
 # Function to install Google Chrome
 install_chrome() {
+  CHROME_VERSION="134.0.6998.117"
+  DEB_URL="https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb"
+  #sudo apt remove google-chrome-stable
+  #sudo apt purge google-chrome-stable
   echo -e "\033[46;37mInstall Google Chrome \033[0m"
   wget -q -O - http://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   sudo apt-get update
-  sudo apt-get -y install google-chrome-stable
+  wget ${DEB_URL} -O chrome.deb
+  sudo apt-mark hold google-chrome-stable
+  sudo dpkg -i chrome.deb
   sudo apt-get purge firefox firefox-locale* unity-scope-firefoxbook -y
   sleep 3
   echo -e "\033[46;37m Google Chrome 安装完成。 \033[0m"
