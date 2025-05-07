@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.2.4                             #"
+echo "#                                 V 3.2.5                             #"
 echo "#######################################################################"
 echo ""
 
@@ -94,7 +94,11 @@ install_docker() {
   sudo mkdir -p /etc/docker
   sudo tee /etc/docker/daemon.json <<-'EOF'
   {
-    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com"]
+    "registry-mirrors": ["https://nol6uuul.mirror.aliyuncs.com",
+    "https://docker.m.daocloud.io", 
+    "https://noohub.ru", 
+    "https://huecker.io",
+    "https://dockerhub.timeweb.cloud"]
   }
 EOF
 
