@@ -31,7 +31,7 @@ install_all() {
   install_sublime
   install_flameshot
   install_typora
-  install_netease_music
+  # install_netease_music
   install_chrome
   install_meld
   install_kazam
@@ -211,14 +211,50 @@ install_typora() {
 # Function to install Netease Cloud Music
 install_netease_music() {
   echo -e "\033[46;37mInstall Netease Cloud Music \033[0m"
-  wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb 
-  echo -e "Install netease-cloud-music,Please wait...\c"
+  
+  # Check if the packaging script exists
+  SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
+  NETEASE_SCRIPT="$SCRIPT_DIR/netease-cloud-music_deb.sh"
+  
+  if [ -f "$NETEASE_SCRIPT" ]; then
+    echo "使用自定义打包方式安装网易云音乐..."
+    # Make the script executable
+    chmod +x "$NETEASE_SCRIPT"
+    
+    # Run the packaging script to create a custom package
+    bash "$NETEASE_SCRIPT"
+    
+    # Get the package name
+    NETEASE_DEB="$SCRIPT_DIR/custom_netease-cloud-music.deb"
+    
+    # Check if the package was created successfully
+    if [ -f "$NETEASE_DEB" ]; then
+      echo "自定义网易云音乐包创建成功，开始安装..."
+      sudo dpkg -i "$NETEASE_DEB"
+      sudo apt-get -f install -y
+      echo -e "\033[46;37m Netease Cloud Music 安装完成。 \033[0m"
+    else
+      echo -e "\033[41;37m自定义网易云音乐包创建失败，尝试使用官方包...\033[0m"
+      # Fallback to direct download
+      wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.2.1_amd64_ubuntu_20190428.deb
+      sudo dpkg -i netease-cloud-music*.deb
+      sudo apt-get -f install -y
+      rm -f netease-cloud-music*.deb
+    fi
+  else
+    echo -e "\033[41;37m找不到打包脚本，使用官方包安装...\033[0m"
+    # Direct download if script doesn't exist
+    wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb 
+    echo -e "Install netease-cloud-music,Please wait...\c"
+    sudo dpkg -i netease-cloud-music*
+    sudo apt-get -yf install -y
+    sudo dpkg -i netease-cloud-music*
+    sleep 3
+    rm -f netease-cloud-music*.deb
+  fi
+  
   sleep 3
-  sudo dpkg -i netease-cloud-music*
-  sudo apt-get -yf install -y
-  sudo dpkg -i netease-cloud-music*
-  sleep 3
-  echo -e "\033[46;37m Netease Cloud Music 安装完成。 \033[0m"
+  echo -e "\033[46;37m网易云音乐安装完成。\033[0m"
 }
 
 # Function to install Google Chrome
@@ -654,6 +690,16 @@ EOL
     fi
 }
 
+# Function to install ROS
+install_ros() {
+  echo -e "\033[46;37mInstalling ROS via FishROS script\033[0m"
+  wget http://fishros.com/install -O fishros
+  chmod +x fishros
+  . ./fishros
+  rm fishros
+  echo -e "\033[46;37mROS installation completed. Please check the above output for any issues.\033[0m"
+}
+
 
 
 echo  -e "\033[34m 这里是主程序，具体是----------
@@ -682,7 +728,8 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 23：  安装Drawio
 24：  安装Pycharm(Python编辑器，默认不安装)
 25：  安装Kdenlive(视频剪辑，默认不安装)
-26：  安装 Cursor可视化图标(VsCode进阶版，无法通过直接安装，需要手动下载，然后运行该脚本，默认不安装)\033[0m"
+26：  安装 Cursor可视化图标(VsCode进阶版，无法通过直接安装，需要手动下载，然后运行该脚本，默认不安装)
+27：  安装 ROS (机器人操作系统)\033[0m"
 
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
@@ -796,6 +843,10 @@ else
         ;;
       26)
         install_cursor
+        ;;
+      27)
+        update_system
+        install_ros
         ;;
       *)
         echo "Unknown option: $arg"
