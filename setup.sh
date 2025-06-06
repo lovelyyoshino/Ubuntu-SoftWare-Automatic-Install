@@ -214,7 +214,7 @@ install_netease_music() {
   
   # Check if the packaging script exists
   SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-  NETEASE_SCRIPT="$SCRIPT_DIR/netease-cloud-music_deb.sh"
+  NETEASE_SCRIPT="$SCRIPT_DIR/netease-cloud-music_deb_none.sh"
   
   if [ -f "$NETEASE_SCRIPT" ]; then
     echo "使用自定义打包方式安装网易云音乐..."
