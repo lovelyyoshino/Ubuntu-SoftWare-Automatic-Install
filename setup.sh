@@ -216,7 +216,7 @@ install_netease_music() {
   SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
   NETEASE_SCRIPT="$SCRIPT_DIR/netease-cloud-music_deb_none.sh"
   
-  if [ -f "$NETEASE_SCRIPT" ]; then
+  if [ ! -f "$NETEASE_SCRIPT" ]; then
     echo "使用自定义打包方式安装网易云音乐..."
     # Make the script executable
     chmod +x "$NETEASE_SCRIPT"
@@ -242,7 +242,7 @@ install_netease_music() {
       rm -f netease-cloud-music*.deb
     fi
   else
-    echo -e "\033[41;37m找不到打包脚本，使用官方包安装...\033[0m"
+    echo -e "\033[41;37m默认不使用打包脚本，使用官方包安装...\033[0m"
     # Direct download if script doesn't exist
     wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb 
     echo -e "Install netease-cloud-music,Please wait...\c"
