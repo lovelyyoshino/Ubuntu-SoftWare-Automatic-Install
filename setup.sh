@@ -315,7 +315,7 @@ install_whitesur_theme() {
   sudo apt upgrade -y
   sudo apt install -y git gnome-tweaks gnome-shell-extensions
   git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-  cd WhiteSur-gtk-themea
+  cd WhiteSur-gtk-theme
   ./install.sh -t all -N glassy -s 220  # 运行安装脚本
   sudo ./tweaks.sh -g  # 添加主题
   cd ..
