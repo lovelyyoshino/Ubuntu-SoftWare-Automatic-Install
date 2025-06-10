@@ -761,6 +761,29 @@ install_variety() {
   echo -e "\033[46;37mVariety 安装完成。\033[0m"
 }
 
+install_cuda118() {
+  echo -e "\033[46;37m开始安装 CUDA 11.8 ...\033[0m"
+  SCRIPT_PATH="$(dirname "$0")/nvidia_cuda11.8_install.sh"
+  if [ -f "$SCRIPT_PATH" ]; then
+    bash "$SCRIPT_PATH"
+    echo -e "\033[46;37mCUDA 11.8 安装完成。\033[0m"
+  else
+    echo -e "\033[41;37m未找到 nvidia_cuda11.8_install.sh，请将其放在本脚本同目录下。\033[0m"
+  fi
+}
+
+# 新增 CUDA 12.2 安装函数
+install_cuda122() {
+  echo -e "\033[46;37m开始安装 CUDA 12.2 ...\033[0m"
+  SCRIPT_PATH="$(dirname "$0")/nvidia_cuda12.2_install.sh"
+  if [ -f "$SCRIPT_PATH" ]; then
+    bash "$SCRIPT_PATH"
+    echo -e "\033[46;37mCUDA 12.2 安装完成。\033[0m"
+  else
+    echo -e "\033[41;37m未找到 nvidia_cuda12.2_install.sh，请将其放在本脚本同目录下。\033[0m"
+  fi
+}
+
 echo  -e "\033[34m 这里是主程序，具体是----------
 1：   更新系统(默认安装)
 2：   安装基础工具(默认安装)
@@ -795,7 +818,9 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 31：  安装 Neofetch (!!!系统信息展示工具，默认不安装)
 32：  安装 Tailscale (!!!内网穿透/远程访问，默认不安装)
 33：  安装 zsh + oh-my-zsh + 常用 alias (可选)
-34：  安装 Variety(动态壁纸工具，可选)\033[0m"
+34：  安装 Variety(动态壁纸工具，可选)
+35：  安装 CUDA 11.8 (可选，支持TensorRT8.7和cudnn 8.7)
+36：  安装 CUDA 12.2 (可选)\033[0m"
 
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
@@ -941,6 +966,12 @@ else
       34)
         update_system
         install_variety
+        ;;
+      35)
+        install_cuda118
+        ;;
+      36)
+        install_cuda122
         ;;
       *)
         echo "Unknown option: $arg"
