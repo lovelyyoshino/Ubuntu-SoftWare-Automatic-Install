@@ -61,31 +61,40 @@
 
 以下是脚本中可选的安装功能及其对应的数字编号：
 
-1. **更新系统**
-2. **安装基础工具**
-3. **安装 Docker**
-4. **安装 Terminator 终端**
-5. **安装搜狗输入法**
-6. **安装系统监视工具**
-7. **安装 GIMP 图像编辑器**
-8. **安装 VS Code 编辑器**
-9. **安装 Sublime Text 编辑器**
-10. **安装 Flameshot 截图工具**
-11. **安装 Typora Markdown 编辑器**
-12. **安装网易云音乐**
-13. **安装 Google Chrome 浏览器**
-14. **安装 Meld 比较工具**
-15. **安装 Kazam 屏幕录制工具**
-16. **安装 Figlet生成大尺寸字母图形**
-17. **安装 WhiteSur 主题**
-18. **安装 Clash**
-19. **安装 CLion**
-20. **安装 Miniconda**
-21. **安装 Turmius**
-22. **安装 systemback系统回退模块**
-23.  **安装drawio绘图软件**
-24.  **安装pycharm（默认不装）**
-25.  **安装kdenlive视频剪辑软件（默认不装）**
+1. **系统更新**
+2. **基础工具（如 git、vim、curl、tree、htop、fish、字体等）**
+3. **Docker**
+4. **Terminator 终端**
+5. **搜狗输入法**
+6. **系统监视器**
+7. **GIMP 图像处理**
+8. **VS Code**
+9. **Sublime Text**
+10. **Flameshot 截图**
+11. **Retext Markdown 编辑器**
+12. **mplayer/smplayer 视频播放器**
+13. **Chrome 浏览器**
+14. **Meld 文件比较**
+15. **Kazam 屏幕录像**
+16. **Figlet 命令行艺术字体**
+17. **WhiteSur 主题美化**
+18. **Clash/Clash Nyanpasu 代理工具**
+19. **CLion C/C++ IDE**
+20. **Miniconda**
+21. **Termius SSH 客户端**
+22. **systemback 系统备份**
+23. **CompizConfig 窗口增强**
+24. **Sticky Notes 便签**
+25. **Peek 动图截图**
+26. **Drawio 流程图编辑器**
+27. **PyCharm Python IDE**
+28. **Kdenlive 视频剪辑**
+29. **Cursor AI IDE（需手动下载 AppImage 后运行本脚本）**
+30. **ROS 机器人操作系统（FishROS 脚本）**
+31. **Neofetch 系统信息展示**
+32. **Tailscale 内网穿透**
+33. **zsh + oh-my-zsh + 常用 alias**
+34. **Variety 动态壁纸**
 
 
 ### 示例

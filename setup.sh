@@ -772,7 +772,7 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 8：   安装VS Code(代码编辑器，默认安装)
 9：   安装Sublime Text(代码编辑器，默认安装)
 10：  安装Flameshot(截图工具，默认安装)
-11：  安装Typora(Markdown编辑器，默认安装)
+11：  安装ReText(Markdown编辑器，默认安装)
 12：  安装mplayer和smplayer(默认安装，视频播放器)
 13：  安装Chrome(谷歌浏览器，默认安装)
 14：  安装Meld(文件比较工具，默认安装)
