@@ -53,6 +53,7 @@ sudo apt install cuda-11-8 -y
 # setup your paths
 echo 'export PATH=/usr/local/cuda-11.8/bin:$PATH' >> ~/.bashrc
 echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.8/lib64:$LD_LIBRARY_PATH' >> ~/.bashrc
+echo 'export CPATH=/usr/local/cuda-11.8/targets/x86_64-linux/include:$CPATH' >> ~/.bashrc
 source ~/.bashrc
 sudo ldconfig
 
