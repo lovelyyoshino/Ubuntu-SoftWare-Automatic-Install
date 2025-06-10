@@ -243,7 +243,7 @@ install_chrome() {
   sleep 3
   echo -e "\033[46;37m Google Chrome 安装完成。如果无法打开则需要参考两个操作 \033[0m"
   echo -e "\033[46;37m 1. 彻底卸载谷歌浏览器，尝试是否因为安装最新的chrome导致的缓存，无法降级。 参考链接：https://blog.csdn.net/Gochan_Tao/article/details/142451263 \033[0m"
-  echo -e "\033[46;37m 2. 如果无法打开，则需要输入google-chrome，然后看问题，这种情况一般就是chromedriver版本不对，则需要驱动安装。 参考链接：https://blog.csdn.net/weixin_44523262/article/details/137971666 \033[0m"
+  echo -e "\033[46;37m 2. 如果无法打开，则需要输入google-chrome，然后看问题，这种情况一般就是chromedriver版本不对，则需要驱动安装。 参考链接：https://blog.csdn.net/weixin_44523262/article/details/137971666 下载路径为：https://storage.googleapis.com/chrome-for-testing-public/134.0.6998.117/linux64/chromedriver-linux64.zip\033[0m"
 }
 
 # Function to install Meld
