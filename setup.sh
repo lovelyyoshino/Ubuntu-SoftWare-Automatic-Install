@@ -3,13 +3,14 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 3.3.1                            #"
+echo "#                                 V 4.0.0                            #"
 echo "#######################################################################"
 echo ""
 
 echo "详细安装可以参考：https://dora-cmon.github.io/posts/bbf09ec7/"
 echo "额外改进安装可以参考：https://github.com/yxSakana/UbuntuAutoConfigure"
 echo "Ubuntu 其他比较好的脚本：https://github.com/alicfeng/note/blob/master/Linux/%E9%82%A3%E4%B8%AA%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84Linux%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6%E6%B8%85%E5%8D%95.md"
+echo "Ubuntu 分版本的安装脚本：https://github.com/MABIY/shell/blob/master/ubuntu_20.04_init_install_update.sh"
 
 # https://github.com/starFalll/Ubuntu_Init/blob/5f1ab6056b92e846a052efcb1dfdb5b7f9807d50/Linux_Init.sh#L2
 Sources=$(lsb_release -rs)
@@ -30,8 +31,8 @@ install_all() {
   install_vscode
   install_sublime
   install_flameshot
-  install_typora
-  # install_netease_music
+  install_retext
+  install_mplayer_smplayer
   install_chrome
   install_meld
   install_kazam
@@ -45,11 +46,13 @@ install_all() {
       echo -e "\033[46;37m检测到Ubuntu $UBUNTU_VERSION (>20.04)，使用install_clash_nyanpasu函数\033[0m"
       install_clash_nyanpasu
   fi
-#   install_clash
   install_clion
   install_termius
   install_systemback
-  install_drawio
+  install_compizconfig
+  install_stickynotes
+  install_peek
+
   echo -e "\033[46;37mAll installations 安装完成。\033[0m"
 }
 
@@ -68,11 +71,20 @@ install_basic_tools() {
   sudo apt-get install vlc
   sudo apt-get install bleachbit -y
   sudo apt-get install git curl wget gdebi vim unzip -y
-  sudo apt-get install tree htop rar ssh sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
+  sudo apt-get install tree htop net-tools uget aria2 rar ssh tmux sshpass okular wmctrl gnome-tweaks apt-transport-https compizconfig-settings-manager compiz-plugins-extra meld -y
+  # LSB is keep distribution to keep the organizational structure of the Linux Foundation to standardize the software system structure
+  sudo apt-get install -y lsb-core || echo "--------------lsb-core install error"
   sudo add-apt-repository ppa:kelebek333/mint-tools -y
   sudo apt update -y && sudo apt-get purge sticky
+  # 使用kchmviewer来避免中文乱码
+  sudo apt-get install kchmviewer -y
+  # 使用preload来加速应用程序的启动
+  sudo apt-get install preload -y
+  # 安装ttf-wqy-microhei作为中文字体
+  sudo apt-get install ttf-wqy-microhei -y
+
   sudo apt-get install fish  #fish 自动补全工具，不需要zsh了。这里还可以通过fish_config完成环境配置
-  echo 'exec fish' >> ~/.bashrc
+  echo '# exec fish' >> ~/.bashrc
   sudo apt install baobab # disk usage analyzer 
   sleep 3
   echo -e "\033[46;37minstall basic tools 安装完成。 \033[0m"
@@ -189,72 +201,28 @@ install_sublime() {
   echo -e "\033[46;37minstall sublime text 安装完成。 \033[0m"
 }
 
-# Function to install Flameshot
+# Function to install Flameshot, 参考：https://blog.csdn.net/qq_62737390/article/details/148225833
 install_flameshot() {
   echo -e "\033[46;37minstall flameshot \033[0m"
   sudo apt-get install flameshot -y
   sleep 3
-  echo -e "\033[46;37minstall flameshot 安装完成。 \033[0m"
+  echo -e "\033[46;37minstall flameshot 安装完成。设置快捷键在设置->键盘->键盘快捷键->查看及自定义快捷键->自定义快捷键 \033[0m"
 }
 
-# Function to install Typora
-install_typora() {
-  echo -e "\033[46;37minstall markdown editor Typora \033[0m"
-  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BA300B7755AFCFAE
-  sudo add-apt-repository -y 'deb http://typora.io linux/'
-  sudo apt-get update
-  sudo apt-get install -y typora
+# Function to install retext (安装 ReText)
+install_retext() {
+  echo -e "\033[46;37m安装 markdown 编辑器 ReText \033[0m"
+  sudo apt install -y retext
   sleep 3
-  echo -e "\033[46;37minstall markdown editor Typora 安装完成。 \033[0m"
+  echo -e "\033[46;37mReText 安装完成。 \033[0m"
 }
 
-# Function to install Netease Cloud Music
-install_netease_music() {
-  echo -e "\033[46;37mInstall Netease Cloud Music \033[0m"
-  
-  # Check if the packaging script exists
-  SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
-  NETEASE_SCRIPT="$SCRIPT_DIR/netease-cloud-music_deb_none.sh"
-  
-  if [ ! -f "$NETEASE_SCRIPT" ]; then
-    echo "使用自定义打包方式安装网易云音乐..."
-    # Make the script executable
-    chmod +x "$NETEASE_SCRIPT"
-    
-    # Run the packaging script to create a custom package
-    bash "$NETEASE_SCRIPT"
-    
-    # Get the package name
-    NETEASE_DEB="$SCRIPT_DIR/custom_netease-cloud-music.deb"
-    
-    # Check if the package was created successfully
-    if [ -f "$NETEASE_DEB" ]; then
-      echo "自定义网易云音乐包创建成功，开始安装..."
-      sudo dpkg -i "$NETEASE_DEB"
-      sudo apt-get -f install -y
-      echo -e "\033[46;37m Netease Cloud Music 安装完成。 \033[0m"
-    else
-      echo -e "\033[41;37m自定义网易云音乐包创建失败，尝试使用官方包...\033[0m"
-      # Fallback to direct download
-      wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.2.1_amd64_ubuntu_20190428.deb
-      sudo dpkg -i netease-cloud-music*.deb
-      sudo apt-get -f install -y
-      rm -f netease-cloud-music*.deb
-    fi
-  else
-    echo -e "\033[41;37m默认不使用打包脚本，使用官方包安装...\033[0m"
-    # Direct download if script doesn't exist
-    wget -q http://d1.music.126.net/dmusic/netease-cloud-music_1.1.0_amd64_ubuntu.deb 
-    echo -e "Install netease-cloud-music,Please wait...\c"
-    sudo dpkg -i netease-cloud-music*
-    sudo apt-get -yf install -y
-    sudo dpkg -i netease-cloud-music*
-    sleep 3
-    rm -f netease-cloud-music*.deb
-  fi
-  
-  sleep 3
-  echo -e "\033[46;37m网易云音乐安装完成。\033[0m"
+# Function to install mplayer and smplayer (replaces Netease Cloud Music)
+install_mplayer_smplayer() {
+  echo -e "\033[46;37mInstall mplayer and smplayer \033[0m"
+  sudo apt install -y mplayer
+  sudo apt install -y smplayer
+  echo -e "\033[46;37mmplayer 和 smplayer 安装完成。\033[0m"
 }
 
 # Function to install Google Chrome
@@ -270,9 +238,12 @@ install_chrome() {
   wget ${DEB_URL} -O chrome.deb
   sudo apt-mark hold google-chrome-stable
   sudo dpkg -i chrome.deb
+  
   sudo apt-get purge firefox firefox-locale* unity-scope-firefoxbook -y
   sleep 3
-  echo -e "\033[46;37m Google Chrome 安装完成。 \033[0m"
+  echo -e "\033[46;37m Google Chrome 安装完成。如果无法打开则需要参考两个操作 \033[0m"
+  echo -e "\033[46;37m 1. 彻底卸载谷歌浏览器，尝试是否因为安装最新的chrome导致的缓存，无法降级。 参考链接：https://blog.csdn.net/Gochan_Tao/article/details/142451263 \033[0m"
+  echo -e "\033[46;37m 2. 如果无法打开，则需要输入google-chrome，然后看问题，这种情况一般就是chromedriver版本不对，则需要驱动安装。 参考链接：https://blog.csdn.net/weixin_44523262/article/details/137971666 \033[0m"
 }
 
 # Function to install Meld
@@ -485,7 +456,26 @@ EOF
 
   echo -e "\033[46;37mClash Nyanpasu 安装和配置完成。\033[0m"
 }
+install_compizconfig(){
+  echo -e "\033[46;37minstall compizconfig \033[0m"
+  sudo apt-get install compizconfig-settings-manager
+  sudo apt-get install compiz-plugins compiz-plugins-extra
+  echo -e "\033[46;37mCompizConfig 安装完成。 \033[0m"
+}
 
+install_stickynotes() {
+  echo -e "\033[46;37minstall stickynotes \033[0m"
+  sudo add-apt-repository ppa:umang/indicator-stickynotes -y
+  sudo apt-get install -y indicator-stickynotes
+  echo -e "\033[46;37mSticky Notes 安装完成。 \033[0m"
+}
+
+install_peek() {
+  echo -e "\033[46;37minstall Peek (动图截图工具) \033[0m"
+  sudo add-apt-repository ppa:peek-developers/stable -y
+  sudo apt install -y peek
+  echo -e "\033[46;37mPeek 安装完成。\033[0m"
+}
 
 install_clash_verge() {
   echo -e "\033[46;37mInstalling Clash Verge...\033[0m"
@@ -698,38 +688,114 @@ install_ros() {
   . ./fishros
   rm fishros
   echo -e "\033[46;37mROS installation completed. Please check the above output for any issues.\033[0m"
+  # 写入为了在conda deactivate时不影响PATH。可以直接找到ros版本
+  echo 'export PATH=$(echo $PATH | tr ":" "\n" | grep -v "miniconda" | paste -sd:)' >> ~/.bashrc
 }
 
+# Function to install Neofetch
+install_neofetch() {
+  echo -e "\033[46;37mInstall Neofetch \033[0m"
+  sudo add-apt-repository ppa:dawidd0811/neofetch -y
+  sudo apt-get install neofetch -y
+  sleep 2
+  echo -e "\033[46;37mNeofetch 安装完成。 \033[0m"
+}
 
+# Function to install Tailscale (解决没有公网IP问题)
+install_tailscale() {
+  sudo apt install openssh-server -y
+  sudo service ssh start
+  sudo systemctl enable ssh
+  sudo service ssh status
+  echo -e "\033[46;37m安装并配置 Tailscale (内网穿透)：https://zhuanlan.zhihu.com/p/1912191578182756128\033[0m"
+  # 安装Tailscale
+  curl -fsSL https://tailscale.com/install.sh | sh
+  # 启动并获取认证链接
+  sudo tailscale up
+  # 创建开机自启脚本
+  cat > ~/tailscale-startup.sh << 'EOF'
+#!/bin/bash
+echo "  启动Tailscale..."
+sudo tailscale up
+echo "✅ Tailscale已启动"
+echo "  设备IP: $(tailscale ip -4)"
+EOF
+  chmod +x ~/tailscale-startup.sh
+  # 添加到bashrc
+  if ! grep -q 'tailscale-startup.sh' ~/.bashrc; then
+    echo '~/tailscale-startup.sh' >> ~/.bashrc
+  fi
+  # 设置 systemd 自启（如支持）
+  sudo systemctl enable tailscaled 2>/dev/null || true
+  echo -e "\033[46;37mTailscale 安装完成。请根据提示完成认证。\033[0m"
+  echo -e "\033[46;37m如需注册账号请访问：https://tailscale.com/\033[0m"
+  echo -e "\033[46;37m认证完成后，可通过 tailscale ip -4 查看分配的内网IP。\033[0m"
+}
+
+install_zsh_ohmyzsh_aliases() {
+  echo -e "\033[46;37m安装 zsh start \033[0m"
+  sudo apt-get install -y zsh || echo -e "\033[46;------------zsh install error \033[0m"
+  echo -e "\033[46;37minstall oh my zsh \033[0m"
+  echo ji | sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  echo -e "\033[46;37minput custom alias export \033[0m"
+  sudo sh -c "cat >> /home/lh/.zshrc <<EOF
+alias datef=\"date '+%Y%m%d'\"
+alias gdate=\"date +'%Y%m%d' | clipcopy\"
+alias gpu=\"grive -p /home/lh/grive/\"
+alias pu=\"git add -A && git commit -m  \"..\" && git push\"
+alias rb=\"echo ji | sudo sync;sudo sync;sudo sync;sudo -S reboot\"
+alias sd=\"gpu && sudo sync&&sudo sync&& sudo sync&&sudo -S shutdown -h 0\"
+alias leanjava=\"idea ~/project/learn_java\"
+alias killmw=\"killall -9 mysql-workbench-bin\"
+alias noproxy=\"unset http_proxy && unset https_proxy\"
+alias killwx=\"killall -9 electronic-wechat\"
+#export https_proxy='https://0.0.0.0:7118'
+export http_proxy='http://0.0.0.0:12333'
+#export https_proxy=socks5://127.0.0.1:1080
+EOF"
+}
+
+install_variety() {
+  echo -e "\033[46;37minstall Variety (动态壁纸工具) \033[0m"
+  sudo apt-get install variety -y
+  echo -e "\033[46;37mVariety 安装完成。\033[0m"
+}
 
 echo  -e "\033[34m 这里是主程序，具体是----------
-1：   更新系统 
-2：   安装基础工具
-3：   安装docker
-4：   安装terminator
-5：   安装搜狗输入法
-6：   安装系统监视器
-7：   安装GIMP
-8：   安装VS Code
-9：   安装Sublime Text
-10：  安装Flameshot
-11：  安装Typora
-12：  安装网易云音乐
-13：  安装Chrome
-14：  安装Meld
-15：  安装Kazam
-16：  安装Figlet
-17：  安装WhiteSur主题
-18：  安装Clash
-19：  安装CLion
-20：  安装Miniconda
-21：  安装Termius
-22：  安装systemback
-23：  安装Drawio
-24：  安装Pycharm(Python编辑器，默认不安装)
-25：  安装Kdenlive(视频剪辑，默认不安装)
-26：  安装 Cursor可视化图标(VsCode进阶版，无法通过直接安装，需要手动下载，然后运行该脚本，默认不安装)
-27：  安装 ROS (机器人操作系统)\033[0m"
+1：   更新系统(默认安装)
+2：   安装基础工具(默认安装)
+3：   安装docker(docker容器，默认安装)
+4：   安装terminator(终端模拟器，默认安装)
+5：   安装搜狗输入法(默认安装)
+6：   安装系统监视器(默认安装)
+7：   安装GIMP(图像处理软件，默认安装)
+8：   安装VS Code(代码编辑器，默认安装)
+9：   安装Sublime Text(代码编辑器，默认安装)
+10：  安装Flameshot(截图工具，默认安装)
+11：  安装Typora(Markdown编辑器，默认安装)
+12：  安装mplayer和smplayer(默认安装，视频播放器)
+13：  安装Chrome(谷歌浏览器，默认安装)
+14：  安装Meld(文件比较工具，默认安装)
+15：  安装Kazam(屏幕录像工具，默认安装)
+16：  安装Figlet(命令行艺术字体，默认安装)
+17：  安装WhiteSur主题(Ubuntu主题，默认安装)
+18：  安装Clash(Clash代理工具，默认安装)
+19：  安装CLion(C/C++编辑器，默认安装)
+20：  安装Miniconda(Anaconda的轻量级版本，默认安装)
+21：  安装Termius(SSH客户端，默认安装)
+22：  安装systemback(系统备份和恢复工具，默认安装)
+23：  安装compizconfig(窗口管理增强，默认安装)
+24：  安装便签(Sticky Notes，默认安装)
+25：  安装Peek(动图截图工具，默认安装)
+26：  安装Drawio(!!!流程图编辑器，默认不安装)
+27：  安装Pycharm(!!!!Python编辑器，默认不安装)
+28：  安装Kdenlive(!!!!视频剪辑，默认不安装)
+29：  安装 Cursor可视化图标(!!!VsCode进阶版，无法通过直接安装，需要手动下载，然后运行该脚本，默认不安装)
+30：  安装 ROS (!!!机器人操作系统，也默认手动安装)
+31：  安装 Neofetch (!!!系统信息展示工具，默认不安装)
+32：  安装 Tailscale (!!!内网穿透/远程访问，默认不安装)
+33：  安装 zsh + oh-my-zsh + 常用 alias (可选)
+34：  安装 Variety(动态壁纸工具，可选)\033[0m"
 
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
@@ -783,11 +849,11 @@ else
         ;;
       11)
         update_system
-        install_typora
+        install_retext
         ;;
       12)
         update_system
-        install_netease_music
+        install_mplayer_smplayer
         ;;
       13)
         update_system
@@ -831,22 +897,50 @@ else
         ;;
       23)
         update_system
-        install_drawio
+        install_compizconfig
         ;;
       24)
         update_system
-        install_pycharm
+        install_stickynotes
         ;;
       25)
         update_system
-        install_kdenlive
+        install_peek
         ;;
       26)
-        install_cursor
+        update_system
+        install_drawio
         ;;
       27)
         update_system
+        install_pycharm
+        ;;
+      28)
+        update_system
+        install_kdenlive
+        ;;
+      29)
+        install_cursor
+        ;;
+      30)
+        update_system
         install_ros
+        ;;
+      31)
+        update_system
+        install_neofetch
+        ;;
+      32)
+        update_system
+        install_tailscale
+        ;;
+      33)
+        update_system
+        install_zsh_ohmyzsh_aliases
+        ;;
+      34)
+        update_system
+        install_variety
         ;;
       *)
         echo "Unknown option: $arg"
