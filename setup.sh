@@ -3,7 +3,7 @@
 echo ""
 echo "#######################################################################"
 echo "#                          Start to configurate!                      #"
-echo "#                                 V 4.0.0                            #"
+echo "#                                 V 4.0.1                            #"
 echo "#######################################################################"
 echo ""
 
@@ -52,6 +52,8 @@ install_all() {
   install_compizconfig
   install_stickynotes
   install_peek
+  install_stress
+  install_btop
 
   echo -e "\033[46;37mAll installations 安装完成。\033[0m"
 }
@@ -784,6 +786,49 @@ install_cuda122() {
   fi
 }
 
+# Function to install stress (Linux压力测试工具)
+install_stress() {
+  echo -e "\033[46;37minstall stress (Linux压力测试工具) \033[0m"
+  sudo apt-get install stress -y
+  # 同时安装 stress-ng (stress的扩展版本)
+  sudo apt-get install stress-ng -y
+  sleep 2
+  echo -e "\033[46;37mstress 和 stress-ng 安装完成。\033[0m"
+  echo -e "\033[46;37m使用方法：\033[0m"
+  echo -e "\033[46;37m  stress --cpu 4 --timeout 10s  # CPU压力测试\033[0m"
+  echo -e "\033[46;37m  stress --vm 2 --vm-bytes 1G --timeout 10s  # 内存压力测试\033[0m"
+  echo -e "\033[46;37m  stress-ng --cpu 4 --io 2 --timeout 10s  # 综合压力测试\033[0m"
+}
+
+# Function to install btop (美观的系统监控工具)
+install_btop() {
+  echo -e "\033[46;37minstall btop (美观的系统监控工具) \033[0m"
+  
+  # 检查Ubuntu版本，22.04及以上可以直接用apt安装
+  if (( UBUNTU_MAJOR >= 22 )); then
+    sudo apt-get install btop -y
+  else
+    # 对于较老的Ubuntu版本，从GitHub下载二进制文件
+    echo -e "\033[46;37m检测到Ubuntu $UBUNTU_VERSION，从GitHub下载btop二进制文件\033[0m"
+    BTOP_VERSION="1.2.13"
+    wget https://github.com/aristocratos/btop/releases/download/v${BTOP_VERSION}/btop-x86_64-linux-musl.tbz -O btop.tbz
+    if [ $? -eq 0 ]; then
+      tar -xjf btop.tbz
+      sudo mv btop/bin/btop /usr/local/bin/btop
+      sudo chmod +x /usr/local/bin/btop
+      rm -rf btop btop.tbz
+    else
+      echo -e "\033[41;37m下载失败，尝试从snap安装\033[0m"
+      sudo snap install btop
+    fi
+  fi
+  
+  sleep 2
+  echo -e "\033[46;37mbtop 安装完成。\033[0m"
+  echo -e "\033[46;37m使用方法：直接运行 btop 命令\033[0m"
+  echo -e "\033[46;37m快捷键：1-CPU 2-内存 3-网络 4-进程 p-切换预设 q-退出\033[0m"
+}
+
 echo  -e "\033[34m 这里是主程序，具体是----------
 1：   更新系统(默认安装)
 2：   安装基础工具(默认安装)
@@ -820,7 +865,9 @@ echo  -e "\033[34m 这里是主程序，具体是----------
 33：  安装 zsh + oh-my-zsh + 常用 alias (可选)
 34：  安装 Variety(动态壁纸工具，可选)
 35：  安装 CUDA 11.8 (可选，支持TensorRT8.7和cudnn 8.7)
-36：  安装 CUDA 12.2 (可选)\033[0m"
+36：  安装 CUDA 12.2 (可选)
+37：  安装 stress (Linux压力测试工具，默认安装)
+38：  安装 btop (美观的系统监控工具，默认安装)\033[0m"
 
 
 echo  -e "\033[34m 请根据需要输入对应的数字，多个数字之间用空格隔开，回车默认安装所有工具\033[0m"
@@ -972,6 +1019,14 @@ else
         ;;
       36)
         install_cuda122
+        ;;
+      37)
+        update_system
+        install_stress
+        ;;
+      38)
+        update_system
+        install_btop
         ;;
       *)
         echo "Unknown option: $arg"
